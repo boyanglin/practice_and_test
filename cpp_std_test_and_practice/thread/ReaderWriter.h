@@ -1,15 +1,20 @@
 #ifndef READER_WRITER_H_
 #define READER_WRITER_H_
 
+#include <memory>
+#include <vector>
+#include <unordered_map>
+#include <map>
 
 namespace ReaderWriter {
+
 	class SharedData{
 	public:
 		SharedData();
 		~SharedData();
 
-		double read(int index) const;
-		void write(int index, double value);
+		double read(std::string index) const;
+		void write(std::string index, double value);
 
 	private:
 		class SharedDataImp;
@@ -18,26 +23,50 @@ namespace ReaderWriter {
 
 	class Writer {
 	public:
-		Writer(int id);
+		Writer(const std::string& id);
 		~Writer();
 
-		void write(std::shared_ptr<SharedData> shared_data);
-		void write(std::shared_ptr<SharedData> shared_data, double value);
+		void write();
+		void write(double value);
 	private:
 		class WriterImp;
 		WriterImp* writerImp_;
 	};
 
-	class Reader {
-	public:
-		Reader(int id);
-		~Reader();
+	//class Reader {
+	//public:
+	//	typedef std::shared_ptr<Reader> Ptr;
 
-		void read(const std::shared_ptr<SharedData> shared_data) const;
+	//	Reader(int id);
+	//	~Reader();
+
+	//	void read(const std::shared_ptr<SharedData> shared_data) const;
+	//private:
+	//	class ReaderImp;
+	//	ReaderImp* readerImp_;
+	//};
+
+	typedef std::shared_ptr<double> DataPtr;
+	typedef std::map< std::string, DataPtr> Cache;
+	typedef std::shared_ptr<Cache> CachePtr;
+
+	class FobusClient {
+	public:
+		typedef std::shared_ptr<FobusClient> Ptr;
+		double getData(const std::string& szChannel);
 	private:
-		class ReaderImp;
-		ReaderImp* readerImp_;
+
 	};
 
+	class UpdateRouter {
+	public:
+		UpdateRouter();
+		~UpdateRouter();
+		bool update(CachePtr cache);
+	private:
+		std::vector<FobusClient::Ptr> myReaders;
+		class ThreadPool;
+		ThreadPool* mypThreadPool;
+	};
 }
 #endif

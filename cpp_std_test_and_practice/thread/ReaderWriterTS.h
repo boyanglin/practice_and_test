@@ -9,7 +9,8 @@ namespace CPP_STD_TEST_AND_PRACTIVE_TS
 	class ReaderWriterTS
 	{
 	public:
-		static void first_test();
+		//static void first_test();static SharedData sharedData
+		static void TestUpdateRouter();
 		static  boost::unit_test_framework::test_suite* suite();
 	};
 

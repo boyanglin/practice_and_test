@@ -15,50 +15,41 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="funcs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ReaderWriter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ReaderWriterTS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="funcsTS.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SharedPointerTS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TestRunner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RValue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RValueTS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="General.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralTS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="RValue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RValueTS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="funcs.h">
+    <ClInclude Include="General.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ReaderWriter.h">
+    <ClInclude Include="GeneralTS.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ReaderWriterTS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="funcsTS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SharedPointer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SharedPointerTS.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="thread.rc">
+    <ResourceCompile Include="cpp11.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

@@ -9,11 +9,11 @@
 #include <boost\asio.hpp>
 #include <boost\thread\thread.hpp>
 #include <boost\thread\future.hpp>
+#include <boost\atomic.hpp>
 
 #include <boost\lexical_cast.hpp>
 
 #include "ReaderWriter.h"
-
 
 namespace ReaderWriter {
 

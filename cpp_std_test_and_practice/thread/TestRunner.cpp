@@ -4,6 +4,7 @@
 
 #include "funcsTS.h"
 #include "ReaderWriterTS.h"
+#include "SharedPointerTS.h"
 
 using namespace boost::unit_test;
 
@@ -17,8 +18,9 @@ test_suite* init_unit_test_suite(int, char*[])
 	BOOST_MESSAGE(rule);
 
 	// Add all test suites
-	framework::master_test_suite().add(CPP_STD_TEST_AND_PRACTIVE_TS::ReaderWriterTS::suite());
+	//framework::master_test_suite().add(CPP_STD_TEST_AND_PRACTIVE_TS::ReaderWriterTS::suite());
 	//framework::master_test_suite().add(CPP_STD_TEST_AND_PRACTIVE_TS::funcsTS::suite());
+	framework::master_test_suite().add(CPP_STD_TEST_AND_PRACTIVE_TS::SharedPointerTS::suite());
 
 	return 0;
 }

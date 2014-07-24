@@ -2,7 +2,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "CredentialManagerTS.h"
+#include "CredentialTS.h"
 
 using namespace boost::unit_test;
 
@@ -15,7 +15,7 @@ test_suite* init_unit_test_suite(int, char*[])
 	BOOST_MESSAGE(header);
 	BOOST_MESSAGE(rule);
 
-	framework::master_test_suite().add(CPP_STD_TEST_AND_PRACTIVE_TS::CredentialManagerTS::suite());
+	framework::master_test_suite().add(CPP_STD_TEST_AND_PRACTIVE_TS::CredentialTS::suite());
 
 	return 0;
 }

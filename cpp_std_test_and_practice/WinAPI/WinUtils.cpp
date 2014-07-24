@@ -1,13 +1,18 @@
 #include "WinUtils.h"
-#include <atlconv.h>
+
 
 namespace WinAPI 
 {
-	wchar_t* toLPWSTR(size_t& strSizeOut, const std::string& strIn)
+	BSTR toBSTR(int& wcharLength, const std::string& source)
 	{
-		strSizeOut = static_cast<size_t>(MultiByteToWideChar(CP_UTF8, 0, strIn.c_str(), -1, NULL, 0));
-		wchar_t* strOut = new wchar_t[strSizeOut];
-		MultiByteToWideChar(CP_UTF8, 0, strIn.c_str(), -1, strOut, strSizeOut);
-		return strOut;
+		wcharLength = ::MultiByteToWideChar(CP_UTF8, 0 /* no flags */,
+			source.data(), source.length(),
+			NULL, 0);
+
+		BSTR wcharData = ::SysAllocStringLen(NULL, wcharLength);
+		::MultiByteToWideChar(CP_ACP, 0 /* no flags */,
+			source.data(), source.length(),
+			wcharData, wcharLength);
+		return wcharData;
 	}
 }

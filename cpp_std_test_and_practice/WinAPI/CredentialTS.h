@@ -6,7 +6,7 @@
 namespace CPP_STD_TEST_AND_PRACTIVE_TS
 {
 
-	class CredentialManagerTS
+	class CredentialTS
 	{
 	public:
 		static void TestExists();

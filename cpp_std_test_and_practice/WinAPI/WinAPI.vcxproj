@@ -82,14 +82,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AutoCredentialBuffer.h" />
-    <ClInclude Include="CredentialManager.h" />
-    <ClInclude Include="CredentialManagerTS.h" />
+    <ClInclude Include="Credential.h" />
+    <ClInclude Include="CredentialConsts.h" />
+    <ClInclude Include="CredentialPrompt.h" />
+    <ClInclude Include="CredentialTS.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="WinUtils.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CredentialManager.cpp" />
-    <ClCompile Include="CredentialManagerTS.cpp" />
+    <ClCompile Include="Credential.cpp" />
+    <ClCompile Include="CredentialConsts.cpp" />
+    <ClCompile Include="CredentialPrompt.cpp" />
+    <ClCompile Include="CredentialTS.cpp" />
     <ClCompile Include="TestRunner.cpp" />
     <ClCompile Include="WinUtils.cpp" />
   </ItemGroup>

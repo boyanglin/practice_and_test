@@ -17,4 +17,27 @@ namespace RValue {
 		MyObject myObject;
 		return myObject;
 	}
+
+	/////////////////////////////////////////////////////////
+
+	template<>
+	double Class1::get<double>(size_t index) const {
+		return mVector[index].first;
+	}
+
+	template<>
+	std::string Class1::get<std::string>(size_t index) const {
+		return mVector[index].second;
+	}
+
+	template<>
+	void Class1::set<double>(const double value, size_t index) {
+		mVector[index].first = value;
+	}
+
+	template<>
+	void Class1::set<std::string>(const std::string value, size_t index){
+		mVector[index].second = value;
+	}
+
 } //namespace RValue 

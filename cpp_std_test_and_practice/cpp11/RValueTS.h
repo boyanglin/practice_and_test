@@ -8,6 +8,7 @@ namespace CPP_STD_TEST_AND_PRACTIVE_TS {
 	class RValueTS {
 	public:
 		static void TestFuncs();
+		static void TestClass1();
 		static  boost::unit_test_framework::test_suite* suite();
 	};
 } //namespace CPP_STD_TEST_AND_PRACTIVE_TS

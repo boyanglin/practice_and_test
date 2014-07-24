@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "thread", "thread\thread.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpp11", "cpp11\cpp11.vcxproj", "{FD77734D-FA90-46F9-8447-F0EBE84CBD6A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinAPI", "WinAPI\WinAPI.vcxproj", "{75E25D62-5B14-403C-BE04-066600232272}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +23,10 @@ Global
 		{FD77734D-FA90-46F9-8447-F0EBE84CBD6A}.Debug|Win32.Build.0 = Debug|Win32
 		{FD77734D-FA90-46F9-8447-F0EBE84CBD6A}.Release|Win32.ActiveCfg = Release|Win32
 		{FD77734D-FA90-46F9-8447-F0EBE84CBD6A}.Release|Win32.Build.0 = Release|Win32
+		{75E25D62-5B14-403C-BE04-066600232272}.Debug|Win32.ActiveCfg = Debug|Win32
+		{75E25D62-5B14-403C-BE04-066600232272}.Debug|Win32.Build.0 = Debug|Win32
+		{75E25D62-5B14-403C-BE04-066600232272}.Release|Win32.ActiveCfg = Release|Win32
+		{75E25D62-5B14-403C-BE04-066600232272}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

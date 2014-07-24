@@ -90,7 +90,7 @@ namespace General {
 	void VectorWrapperTestFunction();
 	void TestAssignmentOperator();
 	void TestVectorReference();
-
+	void TestStdArray();
 
 } //namespace General
 

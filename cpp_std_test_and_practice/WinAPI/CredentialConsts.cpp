@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include <wincred.h>
 
-namespace WinAPI {
+namespace KBaseWin {
 
 	const unsigned long CredentialType::Generic = CRED_TYPE_GENERIC;
 	const unsigned long CredentialType::DomainPassword = CRED_TYPE_DOMAIN_PASSWORD;
@@ -15,4 +15,4 @@ namespace WinAPI {
 	const unsigned long CredentialPersistence::LocalComputer = CRED_PERSIST_LOCAL_MACHINE;
 	const unsigned long CredentialPersistence::Enterprise = CRED_PERSIST_ENTERPRISE;
 
-} //namespace WinAPI
+} //namespace KBaseWin

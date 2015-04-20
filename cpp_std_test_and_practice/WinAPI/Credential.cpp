@@ -1,5 +1,6 @@
 #include "Credential.h"
 
+#include "AutoBstr.h"
 #include "AutoCredentialBuffer.h"
 #include "CredentialConsts.h"
 
@@ -7,16 +8,13 @@
 
 #include <boost\lexical_cast.hpp>
 
-
 #include <atlbase.h>
-//#include <atlconv.h>
-
-#include <Windows.h>
 #include <wincred.h>
+#include <Windows.h>
 
 #include <memory>
 
-namespace WinAPI {
+namespace KBaseWin {
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,21 +35,25 @@ namespace WinAPI {
 
 	bool Credential::isContentValid() const
 	{
-		return (!mCredName.empty() && !mUserName.empty() && !mSecret.empty() && mPersistence > CredentialPersistence::PersistenceNone && CredentialType::IsValid(mCredType));
+		return (!mCredName.empty() && !mUsername.empty() && !mSecret.empty() && mPersistence > CredentialPersistence::PersistenceNone && CredentialType::IsValid(mCredType));
 	}
 
 	bool Credential::Load(const std::string& credName, unsigned long credType)
 	{
-		AutoCredentialBuffer autoCredentialBuffer;
+		AutoCredentialBuffer aAutoCredentialBuffer;
 		mPopulated = false;
-		if (0 != ::CredRead(std::wstring(credName.begin(), credName.end()).c_str(), static_cast<DWORD>(credType), 0, &autoCredentialBuffer.mPCREDENTIAL))
+		if (0 != ::CredRead(std::wstring(credName.begin(), credName.end()).c_str(), static_cast<DWORD>(credType), 0, &aAutoCredentialBuffer.mPCREDENTIAL))
 		{
-			mCredName = CW2A(autoCredentialBuffer.mPCREDENTIAL->TargetName);
-			mUserName = CW2A(autoCredentialBuffer.mPCREDENTIAL->UserName);
-			mPersistence = autoCredentialBuffer.mPCREDENTIAL->Persist;
-			mCredType = autoCredentialBuffer.mPCREDENTIAL->Type;
-			mSecret = CW2A(reinterpret_cast<LPCWSTR>(autoCredentialBuffer.mPCREDENTIAL->CredentialBlob));
-			
+			mCredName = CW2A(aAutoCredentialBuffer.mPCREDENTIAL->TargetName);
+			mUsername = CW2A(aAutoCredentialBuffer.mPCREDENTIAL->UserName);
+			mPersistence = aAutoCredentialBuffer.mPCREDENTIAL->Persist;
+			mCredType = aAutoCredentialBuffer.mPCREDENTIAL->Type;
+			// ***************************************************************************************
+			//TODO: this part should be revised. convert std::string to LPBYTE is not ideal here
+			//TODO: we have to encrypt secret here
+			mSecret = CW2A(reinterpret_cast<LPCWSTR>(aAutoCredentialBuffer.mPCREDENTIAL->CredentialBlob));
+			// ***************************************************************************************
+
 			mPopulated = true;
 			return true;
 		}
@@ -70,7 +72,7 @@ namespace WinAPI {
 	void Credential::SetUserName(const std::string& userName)
 	{
 		if (userName.empty()) throw std::runtime_error("User name can't be empty.");
-		mUserName = userName;
+		mUsername = userName;
 	}
 
 	void Credential::SetSecret(const std::string& secret)
@@ -98,30 +100,41 @@ namespace WinAPI {
 			throw std::runtime_error("Can't save an empty credential.");
 
 		USES_CONVERSION;
-		CREDENTIAL credential = { 0 };
-		credential.Type = mCredType;
-		credential.TargetName = A2W(mCredName.c_str());
-		credential.UserName = A2W(mUserName.c_str());
-		credential.Persist = mPersistence;
+		CREDENTIAL aCredential = { 0 };
+		aCredential.Type = mCredType;
+		aCredential.TargetName = A2W(mCredName.c_str());
+		aCredential.UserName = A2W(mUsername.c_str());
+		aCredential.Persist = mPersistence;
 
 		// ***************************************************************************************
 		//TODO: this part should be revised. convert std::string to LPBYTE is not ideal here
 		//TODO: we have to decrypt secret here
-		int secretlength = 0;
-		BSTR secretWchar = toBSTR(secretlength, mSecret);
-		credential.CredentialBlob = reinterpret_cast<LPBYTE>(secretWchar);
-		//credential.CredentialBlob = reinterpret_cast<LPBYTE>(const_cast<char*>(mSecret.c_str()));
+
+		//method 1
+		//int aSecretLength = 0;
+		//AutoPasswordBstr aAutoSecretBstr;
+		//aAutoSecretBstr.Set(toBSTR(aSecretLength, mSecret));
+		//aCredential.CredentialBlob = reinterpret_cast<LPBYTE>(aAutoSecretBstr.Get());
+
+		//method 2
+		std::wstring aTemp(mSecret.begin(), mSecret.end());
+		AutoWStr autoWstr;
+		autoWstr.Set(&aTemp);
+		aCredential.CredentialBlob = reinterpret_cast<LPBYTE>(const_cast<wchar_t*>(autoWstr.Get()->c_str()));
+
+		//method3
+		//aCredential.CredentialBlob = reinterpret_cast<LPBYTE>(const_cast<char*>(mSecret.c_str()));
 		// ***************************************************************************************
 		
-		credential.CredentialBlobSize = secretlength * sizeof (wchar_t);
+		aCredential.CredentialBlobSize = aTemp.length() * sizeof (wchar_t);
 
-		AutoCredentialBuffer autoCredentialBuffer;
-		autoCredentialBuffer.mPCREDENTIAL = &credential;
+		AutoCredentialBuffer aAutoCredentialBuffer;
+		aAutoCredentialBuffer.mPCREDENTIAL = &aCredential;
 
-		if(!CredWriteW(&credential, 0))
+		if(!CredWriteW(&aCredential, 0))
 		{
-			DWORD result = ::GetLastError();
-			switch (result)
+			DWORD aResult = ::GetLastError();
+			switch (aResult)
 			{
 			case ERROR_NO_SUCH_LOGON_SESSION:
 			{
@@ -147,9 +160,9 @@ namespace WinAPI {
 		USES_CONVERSION;
 		if (!CredDelete(A2W(credName.c_str()), static_cast<DWORD>(credType), 0/*reserved*/)) 
 		{
-			DWORD result = ::GetLastError();
+			DWORD aResult = ::GetLastError();
 
-			switch (result)
+			switch (aResult)
 			{
 			case ERROR_NOT_FOUND:
 			{
@@ -172,7 +185,7 @@ namespace WinAPI {
 	//void Credential::getCredContent(const AutoCredentialBuffer& autoCredentialBuffer)
 	//{
 	//	mCredName = CW2A(autoCredentialBuffer.mPCREDENTIAL->TargetName);
-	//	mUserName = CW2A(autoCredentialBuffer.mPCREDENTIAL->UserName);
+	//	mUsername = CW2A(autoCredentialBuffer.mPCREDENTIAL->UserName);
 	//	mPersistence = autoCredentialBuffer.mPCREDENTIAL->Persist;
 	//	mCredType = autoCredentialBuffer.mPCREDENTIAL->Type;
 	//	mSecret = CW2A(reinterpret_cast<LPCWSTR>(autoCredentialBuffer.mPCREDENTIAL->CredentialBlob));

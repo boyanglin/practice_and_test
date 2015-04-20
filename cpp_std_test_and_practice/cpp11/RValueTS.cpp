@@ -58,8 +58,7 @@ namespace CPP_STD_TEST_AND_PRACTIVE_TS {
 
 	test_suite* RValueTS::suite() {
 		test_suite* suite = BOOST_TEST_SUITE("RValueTS");
-		//suite->add(BOOST_TEST_CASE(&first_test));
-		//suite->add(BOOST_TEST_CASE(&TestFuncs));
+		suite->add(BOOST_TEST_CASE(&TestFuncs));
 		suite->add(BOOST_TEST_CASE(&TestClass1));
 		return suite;
 	}

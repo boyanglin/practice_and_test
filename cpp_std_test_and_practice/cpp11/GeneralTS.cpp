@@ -89,18 +89,54 @@ namespace CPP_STD_TEST_AND_PRACTIVE_TS {
 		a1.deallocate(data, sizeNumber);
 		
 	}
+
 	void GeneralTS::TestNumberLimit() {
 		double testDouble = std::numeric_limits<double>::quiet_NaN();
 		if (testDouble == std::numeric_limits<double>::quiet_NaN())
 			std::cout << "got not a number" << std::endl;
 		std::cout << testDouble << std::endl;
 	}
+
+	void GeneralTS::TestEither()
+	{
+		double aDouble = 1.12;
+		std::string aString = "Test";
+		General::Either aEither_1 = aDouble;
+		General::Either aEither_2 = aString;
+		General::Either aEither_3;
+		BOOST_CHECK(!aEither_1.IsEmpty());
+		BOOST_CHECK(!aEither_2.IsEmpty());
+		BOOST_CHECK(aEither_3.IsEmpty());
+
+		General::Either aEither_4 = aEither_1;
+		BOOST_CHECK(aEither_4.GetDouble() == aEither_1.GetDouble());
+		aEither_1.Set(aString);
+		BOOST_CHECK_THROW(aEither_1.GetDouble(), std::runtime_error);
+		BOOST_CHECK(aEither_1.GetString() == aString);
+
+	}
+
+	void TestReturnConstArg()
+	{
+		General::MockObject aMockObject_1 = "new one";
+		General::MockObject aMockObject_2 = General::TestFunc_ReturnConstArg(aMockObject_1);
+
+		General::MockObject aMockObject_3 = "move old one";
+		General::MockObject aMockObject_4 = General::TestFunc_ReturnConstArg(aMockObject_3);
+
+		General::MockObject aMockObject_5 = "copy old one";
+		General::MockObject aMockObject_6 = General::TestFunc_ReturnConstArg(aMockObject_5);
+
+	}
+
 	test_suite* GeneralTS::suite() {
 		test_suite* suite = BOOST_TEST_SUITE("GeneralTS");
-		suite->add(BOOST_TEST_CASE(&TestFuncs));
+		//suite->add(BOOST_TEST_CASE(&TestFuncs));
 		//suite->add(BOOST_TEST_CASE(&TestSharedPtrOfArray));
 		//suite->add(BOOST_TEST_CASE(&TestDeleter));
 		//suite->add(BOOST_TEST_CASE(&TestNumberLimit));
+		//suite->add(BOOST_TEST_CASE(&TestEither));
+		suite->add(BOOST_TEST_CASE(&TestReturnConstArg));
 		return suite;
 	}
 } //namespace CPP_STD_TEST_AND_PRACTIVE_TS

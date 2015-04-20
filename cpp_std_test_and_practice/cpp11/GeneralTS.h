@@ -11,6 +11,7 @@ namespace CPP_STD_TEST_AND_PRACTIVE_TS {
 		static void TestSharedPtrOfArray();
 		static void TestDeleter();
 		static void TestNumberLimit();
+		static void TestEither();
 		static  boost::unit_test_framework::test_suite* suite();
 	};
 } //namespace CPP_STD_TEST_AND_PRACTIVE_TS

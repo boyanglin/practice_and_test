@@ -11,6 +11,8 @@ namespace CPP_STD_TEST_AND_PRACTIVE_TS
 	public:
 		static void TestExists();
 		static void TestSave();
+		static void TestPrompt();
+		static void TestChangePassword();
 		static  boost::unit_test_framework::test_suite* suite();
 	};
 

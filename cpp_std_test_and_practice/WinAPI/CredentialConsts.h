@@ -2,7 +2,7 @@
 #define CREDENTIAL_CONSTS_H_
 
 
-namespace WinAPI {
+namespace KBaseWin {
 	struct CredentialType
 	{
 		static const unsigned long Generic;

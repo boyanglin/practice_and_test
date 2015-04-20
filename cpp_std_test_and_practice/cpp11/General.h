@@ -1,11 +1,12 @@
 #ifndef GENERAL_H_
 #define GENERAL_H_
 
-#include <iostream>
-#include <vector>
+#include "Common.h"
 
-#define COUT_LINE(msg) std::cout << msg << std::endl;
-#define SHOW_FUNCTION_NAME COUT_LINE(std::string(__FUNCTION__).c_str());
+#include <boost/tr1/cmath.hpp>
+#define _SCL_SECURE_NO_WARNINGS
+
+#pragma warning( disable : 4521 4522 )
 
 namespace General {
 	template<class T>
@@ -91,6 +92,158 @@ namespace General {
 	void TestAssignmentOperator();
 	void TestVectorReference();
 	void TestStdArray();
+
+	class Either
+	{
+	public:
+		Either(const std::string& value)
+			:mHasDouble(false)
+		{
+			memset(&mValue, 0, sizeof(mValue));
+			mValue.mText = new std::string(value);
+		}
+		Either(const double value)
+			:mHasDouble(false)
+		{
+			memset(&mValue, 0, sizeof(mValue));
+			mValue.mDouble = value;
+			mHasDouble = true;
+		}
+
+		Either()
+			:mHasDouble(false)
+		{
+			memset(&mValue, 0, sizeof(mValue));
+			mValue.mDouble = std::numeric_limits<double>::quiet_NaN();
+		}
+
+		~Either()
+		{
+			clear();
+		}
+
+		void Set(const double value)
+		{
+			clear();
+			mValue.mDouble = value;
+			mHasDouble = true;
+		}
+
+		void Set(const std::string& value)
+		{
+			clear();
+			mValue.mText = new std::string(value);
+		}
+
+
+		double GetDouble()
+		{
+			if (mHasDouble)
+				return mValue.mDouble;
+			else
+				throw std::runtime_error("Not a number");
+		}
+
+		std::string GetString()
+		{
+			if (!mHasDouble)
+				return *(mValue.mText);
+			else
+				throw std::runtime_error("Not a string");
+		}
+
+		bool IsEmpty()
+		{
+			return !mHasDouble &&  (!mValue.mText);
+		}
+
+	private:
+		union 
+		{
+			double mDouble;
+			std::string* mText;
+		} mValue;
+
+		bool mHasDouble;
+
+		void clear()
+		{
+			if (mHasDouble)
+			{
+				mHasDouble = false;
+			} 
+			else
+			{
+				if (mValue.mText)
+					delete mValue.mText;
+			}
+			memset(&mValue, 0, sizeof(mValue));
+		}
+	};
+
+	class MockObject
+	{
+		std::string mString;
+
+		void swap(MockObject & other)
+		{
+			std::swap(this->mString, other.mString);
+		}
+	public:
+		MockObject(const std::string & string)
+			:mString(string)
+		{
+		}
+
+		MockObject(const MockObject & mockObject)
+		{
+			std::cout << "Call: MockObject(const MockObject & mockObject)" << std::endl;
+			this->mString = mockObject.mString;
+		}
+
+		MockObject(MockObject & mockObject)
+		{
+			std::cout << "Call: MockObject(MockObject & mockObject)" << std::endl;
+			this->mString = mockObject.mString;
+		}
+
+		//	c:\workarea\practice_and_test\cpp_std_test_and_practice\cpp11\general.h(195) : error C2652 : 'General::MockObject' : illegal copy constructor : first parameter must not be a 'General::MockObject'
+		//MockObject(MockObject mockObject)
+		//{
+		//	this->mString = mockObject.mString;
+		//}
+		
+		MockObject & operator=(MockObject rhs)
+		{
+			std::cout << "Call: MockObject & operator=(MockObject rhs)" << std::endl;
+			swap(rhs);
+			return *this;
+		}
+
+		MockObject & operator=(const MockObject & rhs)
+		{
+			std::cout << "Call: MockObject & operator=(const MockObject & rhs)" << std::endl;
+			MockObject aTemp = rhs;
+			swap(aTemp);
+			return *this;
+		}
+
+		MockObject & operator=( MockObject & rhs)
+		{
+			std::cout << "Call: MockObject & operator=( MockObject & rhs)" << std::endl;
+			MockObject aTemp = rhs;
+			swap(aTemp);
+			return *this;
+		}
+
+		std::string GetString() const
+		{
+			return mString;
+		}
+
+	};
+
+	MockObject TestFunc_ReturnConstArg(const MockObject & mockObject);
 
 } //namespace General
 

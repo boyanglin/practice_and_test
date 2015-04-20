@@ -4,7 +4,7 @@
 #include <Windows.h>
 #include <wincred.h>
 
-namespace WinAPI {
+namespace KBaseWin {
 
 	struct AutoCredentialBuffer
 	{

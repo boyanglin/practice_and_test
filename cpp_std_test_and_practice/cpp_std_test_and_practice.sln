@@ -1,13 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "thread", "thread\thread.vcxproj", "{7ED2D4AA-63C7-45F1-8F0B-4DC0BB8C29ED}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpp11", "cpp11\cpp11.vcxproj", "{FD77734D-FA90-46F9-8447-F0EBE84CBD6A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinAPI", "WinAPI\WinAPI.vcxproj", "{75E25D62-5B14-403C-BE04-066600232272}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "idioms", "idoms\idoms.vcxproj", "{E58199CA-A52F-4522-B136-3CDDC37BD679}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3rdParty", "3rdParty\3rdParty.vcxproj", "{3DEBD496-4150-40A5-BFE9-E91BA4223BD5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EffectiveCpp", "EffectiveCpp\EffectiveCpp.vcxproj", "{BE5D8D8F-658D-438A-B279-A556A87F0520}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PythonInterface", "PythonInterface\PythonInterface.vcxproj", "{57820D0E-C2D9-45D9-B39B-D5973FF03ACE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +35,22 @@ Global
 		{75E25D62-5B14-403C-BE04-066600232272}.Debug|Win32.Build.0 = Debug|Win32
 		{75E25D62-5B14-403C-BE04-066600232272}.Release|Win32.ActiveCfg = Release|Win32
 		{75E25D62-5B14-403C-BE04-066600232272}.Release|Win32.Build.0 = Release|Win32
+		{E58199CA-A52F-4522-B136-3CDDC37BD679}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E58199CA-A52F-4522-B136-3CDDC37BD679}.Debug|Win32.Build.0 = Debug|Win32
+		{E58199CA-A52F-4522-B136-3CDDC37BD679}.Release|Win32.ActiveCfg = Release|Win32
+		{E58199CA-A52F-4522-B136-3CDDC37BD679}.Release|Win32.Build.0 = Release|Win32
+		{3DEBD496-4150-40A5-BFE9-E91BA4223BD5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3DEBD496-4150-40A5-BFE9-E91BA4223BD5}.Debug|Win32.Build.0 = Debug|Win32
+		{3DEBD496-4150-40A5-BFE9-E91BA4223BD5}.Release|Win32.ActiveCfg = Release|Win32
+		{3DEBD496-4150-40A5-BFE9-E91BA4223BD5}.Release|Win32.Build.0 = Release|Win32
+		{BE5D8D8F-658D-438A-B279-A556A87F0520}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BE5D8D8F-658D-438A-B279-A556A87F0520}.Debug|Win32.Build.0 = Debug|Win32
+		{BE5D8D8F-658D-438A-B279-A556A87F0520}.Release|Win32.ActiveCfg = Release|Win32
+		{BE5D8D8F-658D-438A-B279-A556A87F0520}.Release|Win32.Build.0 = Release|Win32
+		{57820D0E-C2D9-45D9-B39B-D5973FF03ACE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{57820D0E-C2D9-45D9-B39B-D5973FF03ACE}.Debug|Win32.Build.0 = Debug|Win32
+		{57820D0E-C2D9-45D9-B39B-D5973FF03ACE}.Release|Win32.ActiveCfg = Release|Win32
+		{57820D0E-C2D9-45D9-B39B-D5973FF03ACE}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

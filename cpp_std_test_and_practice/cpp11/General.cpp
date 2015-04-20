@@ -3,7 +3,11 @@
 #include <array>
 #include <numeric>
 
+
 namespace General {
+
+
+
 	void VectorWrapperTestFunction() 
 	{
 
@@ -116,7 +120,7 @@ namespace General {
 
 		std::cout << "Number of elements bigger than one in testArray3: " << std::count_if(testArray3.cbegin(), testArray3.cend(), [](size_t number){ return number > 1; }) << std::endl;
 
-		std::cout << "The product of elements in testArray5: " << std::accumulate(testArray5.cbegin(), testArray5.cend(), 1, [](size_t num1, size_t num2){ return num1 * num2; }) << std::endl;
+		std::cout << "The product of elements in testArray5: " << std::accumulate(testArray5.cbegin(), testArray5.cend(), 1, [](double num1, double num2){ return static_cast<size_t>(num1 * num2); }) << std::endl;
 
 		std::array<std::pair<double, std::string>, 5> testArray6;
 		testArray6[0].first = 1.1;
@@ -139,7 +143,16 @@ namespace General {
 		(data1 + 3)->second = "0.4";
 
 		Data* data2 = new Data[10];
-		std::copy(data1, data1 + 10, data2);
+		// **************************
+		//c:\program files(x86)\microsoft visual studio 12.0\vc\include\xutility(2132) : error C4996 : 'std::_Copy_impl' : Function
+		//	call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct.
+		//	To disable this warning, use - D_SCL_SECURE_NO_WARNINGS.See documentation on how to use Visual C++ 'Checked Iterators'
+		//c : \program files(x86)\microsoft visual studio 12.0\vc\include\xutility(2113) : see declaration of
+		//	'std::_Copy_impl'
+		// **************************
+		//std::copy(data1, data1 + 10, data2);
+
+		std::copy(data1, data1 + 10, stdext::checked_array_iterator<Data*>(data2, 10));
 		data2->first = 1.0;
 		data2->second = "2";
 		(data2 + 5)->first = 5.0;
@@ -155,4 +168,19 @@ namespace General {
 		delete[] data2;
 		delete[] data1;
 	}
+
+	//this function will return a MockObject which could be a new one or the const argument one
+	MockObject TestFunc_ReturnConstArg(const MockObject & mockObject)
+	{
+		if (mockObject.GetString().compare("move old one") == 0)
+			return std::move(mockObject);
+		else if (mockObject.GetString().compare("copy old one") == 0)
+			return mockObject;
+		else 
+		{
+			MockObject aMockObject("new one");
+			return std::move(mockObject);
+		}
+	}
+
 }

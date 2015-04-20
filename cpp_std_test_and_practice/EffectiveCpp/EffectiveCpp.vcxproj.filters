@@ -18,59 +18,26 @@
     <ClCompile Include="TestRunner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RValue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RValueTS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="General.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneralTS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PolymorphismTS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Polymorphism.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Common.h">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Algorithm.cpp">
+    <ClCompile Include="Chapter4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RValue.h">
+    <ClInclude Include="Chapter4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RValueTS.h">
+    <ClInclude Include="Item20.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="General.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneralTS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Polymorphism.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PolymorphismTS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Algorithm.h">
+    <ClInclude Include="..\cpp11\Common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="cpp11.rc">
+    <ResourceCompile Include="EffectiveCpp.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

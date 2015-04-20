@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E58199CA-A52F-4522-B136-3CDDC37BD679}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>idoms</RootNamespace>
+    <ProjectName>idioms</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v100</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;BOOST_ALL_NO_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\kdev\bprlocal\boost\1.54.0.0\include;</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_wserialization-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_wave-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_unit_test_framework-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_timer-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_thread-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_test_exec_monitor-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_system-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_signals-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_serialization-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_regex-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_random-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_program_options-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_prg_exec_monitor-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_tr1l-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_tr1f-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_tr1-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_c99l-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_c99f-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_c99-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_locale-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_iostreams-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_graph-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_filesystem-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_exception-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_date_time-154_sd.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_chrono-154_sd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AttorneyClient.cpp" />
+    <ClCompile Include="AttorneyClientTS.cpp" />
+    <ClCompile Include="TestRunner.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AttorneyClient.h" />
+    <ClInclude Include="AttorneyClientTS.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="idioms.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

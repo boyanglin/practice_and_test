@@ -20,7 +20,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -47,15 +47,17 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PYTHONINTERFACE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;BOOST_ALL_NO_LIB;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Python27\include;C:\kdev\bprlocal\boost\1.57.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_wserialization-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_wave-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_unit_test_framework-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_timer-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_thread-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_test_exec_monitor-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_system-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_signals-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_serialization-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_regex-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_random-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_program_options-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_prg_exec_monitor-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_math_tr1l-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_math_tr1f-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_math_tr1-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_math_c99l-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_math_c99f-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_math_c99-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_locale-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_iostreams-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_graph-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_filesystem-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_exception-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_date_time-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_chrono-157_sd_v120.lib;C:\kdev\bprlocal\boost\1.57.0.0\lib\x86_32-windows_any-msvc_any\boost_python-157_sd_v120.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Python27\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName).pyd</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -76,6 +78,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="TestHelloWorld.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TestHelloWorld.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

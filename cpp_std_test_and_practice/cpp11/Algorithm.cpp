@@ -21,12 +21,12 @@ namespace General
 
 		aTarget.reserve(aSource.size());
 
-		for_each(aSource.begin(), aSource.end(), [&aTarget](long source) { aTarget.emplace_back(source + 1); });
+		std::for_each(aSource.begin(), aSource.end(), [&aTarget](long source) { aTarget.emplace_back(source + 1); });
 
 		std::cout << "Source:" << std::endl;
-		for_each(aSource.cbegin(), aSource.cend(), [](long source) { std::cout << source << std::endl; });
+		std::for_each(aSource.cbegin(), aSource.cend(), [](long source) { std::cout << source << std::endl; });
 		std::cout << "Target:" << std::endl;
-		for_each(aTarget.cbegin(), aTarget.cend(), [](long Target) { std::cout << Target << std::endl; });
+		std::for_each(aTarget.cbegin(), aTarget.cend(), [](long Target) { std::cout << Target << std::endl; });
 
 	}
 }

@@ -28,24 +28,24 @@ namespace Polymorphism
 	};
 
 	inline Base::~Base() {}
-	//*-> we got the following linking error if we don't define destructor here
+	// ******NOTE****** we got the following linking error if we don't define destructor here
 	//  PolymorphismTS.obj : error LNK2019 : unresolved external symbol "public: virtual __thiscall
 	//	Polymorphism::Base::~Base(void)" (??1Base@Polymorphism@@UAE@XZ) referenced in function "public: virtual __thiscall
 	//	Polymorphism::Deriv1::~Deriv1(void)" (??1Deriv1@Polymorphism@@UAE@XZ) (Local CPU 1, 0:01.15 at +0:13)
 	//	C : \WorkArea\practice_and_test\cpp_std_test_and_practice\Debug\cpp11.exe : fatal error LNK1120 : 1 unresolved externals
 
 
-	//*-> we test different inheritance mode
+	// ******NOTE****** we test different inheritance mode
 	// http://stackoverflow.com/questions/860339/difference-between-private-public-and-protected-inheritance
 
-	class Deriv1_Public : public Base
+	class Deriv1_Public_1 : public Base
 	{
 	public:
 		virtual void myVirtualFunc_1() const
 		{
 			SHOW_FUNCTION_NAME;
 		}
-		//*-> we got the following compiler error if we don't define myVirtualFunc_1() here
+		// ******NOTE****** we got the following compiler error if we don't define myVirtualFunc_1() here
 		//	c : \workarea\practice_and_test\cpp_std_test_and_practice\cpp11\polymorphismts.cpp(18) : error C2259 :
 		//	'Polymorphism::Deriv1' : cannot instantiate abstract class
 		//	due to following members :
@@ -53,19 +53,22 @@ namespace Polymorphism
 		//	c : \workarea\practice_and_test\cpp_std_test_and_practice\cpp11\polymorphism.h(12) : see declaration of
 		//	'Polymorphism::Base::myVirtualFunc_1'
 
+		// ******NOTE****** we don't have to define the virtual destructor here
 		//virtual ~Deriv1() {}
-		//*-> we don't have to define the virtual destructor here
 
 	protected:
 		virtual void myVirtualFunc_2() const
 		{
 			SHOW_FUNCTION_NAME;
 		}
-		//*-> we change the scope of myVirtualFunc_2 in derive class
+		// ******NOTE****** we change the scope of myVirtualFunc_2 in derive class
 		//http://stackoverflow.com/questions/2141188/changing-function-access-mode-in-derived-class
 	private:
 	};
 
+	// ******NOTE******
+	// we don't have to define the pure virtual function in the following cases
+	// ****************
 	class Deriv1_Protected : protected Base
 	{
 	public:
@@ -80,7 +83,7 @@ namespace Polymorphism
 	private:
 	};
 
-	class Deriv2_Public : public Deriv1_Public
+	class Deriv2_Public : public Deriv1_Public_1
 	{
 	public:
 		void showMembers() const
@@ -89,7 +92,7 @@ namespace Polymorphism
 			COUT_LINE(mProtectedMember.c_str());
 
 			//COUT_LINE(mPrivateMember);
-			//*-> derived class doesn't have access to private member
+			// ******NOTE****** derived class doesn't have access to private member
 		}
 	protected:
 	private:
@@ -104,7 +107,7 @@ namespace Polymorphism
 			COUT_LINE(mProtectedMember.c_str());
 
 			//COUT_LINE(mPrivateMember);
-			//*-> derived class doesn't have access to private member
+			// ******NOTE****** derived class doesn't have access to private member
 		}
 	protected:
 	private:
@@ -130,7 +133,7 @@ namespace Polymorphism
 			//'Polymorphism::Base::mProtectedMember' : cannot access inaccessible member declared in class 'Polymorphism::Base'
 
 			//COUT_LINE(mPrivateMember);
-			//*-> derived class doesn't have access to private member
+			// ******NOTE****** derived class doesn't have access to private member
 		}
 	protected:
 	private:

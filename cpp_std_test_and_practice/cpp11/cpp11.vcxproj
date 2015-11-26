@@ -12,24 +12,32 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Algorithm.cpp" />
+    <ClCompile Include="Boost_FileSystem.cpp" />
+    <ClCompile Include="boost_qi.cpp" />
     <ClCompile Include="Common.h" />
     <ClCompile Include="General.cpp" />
     <ClCompile Include="GeneralTS.cpp" />
+    <ClCompile Include="Iterator.cpp" />
     <ClCompile Include="Polymorphism.cpp" />
     <ClCompile Include="PolymorphismTS.cpp" />
     <ClCompile Include="RValue.cpp" />
     <ClCompile Include="RValueTS.cpp" />
+    <ClCompile Include="ArrayTest.cpp" />
     <ClCompile Include="TestRunner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Algorithm.h" />
+    <ClInclude Include="Boost_FileSystem.h" />
+    <ClInclude Include="boost_qi.h" />
     <ClInclude Include="General.h" />
     <ClInclude Include="GeneralTS.h" />
+    <ClInclude Include="Iterator.h" />
     <ClInclude Include="Polymorphism.h" />
     <ClInclude Include="PolymorphismTS.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RValue.h" />
     <ClInclude Include="RValueTS.h" />
+    <ClInclude Include="ArrayTest.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="cpp11.rc" />
@@ -49,8 +57,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v100</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -95,7 +103,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;BOOST_ALL_NO_LIB;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;BOOST_ALL_NO_LIB;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\kdev\bprlocal\boost\1.54.0.0\include</AdditionalIncludeDirectories>
     </ClCompile>
@@ -104,7 +112,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_wserialization-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_wave-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_unit_test_framework-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_timer-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_thread-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_test_exec_monitor-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_system-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_signals-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_serialization-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_regex-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_random-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_program_options-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_prg_exec_monitor-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_tr1l-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_tr1f-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_tr1-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_c99l-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_c99f-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_c99-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_locale-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_iostreams-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_graph-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_filesystem-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_exception-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_date_time-154_s.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_chrono-154_s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_wserialization-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_wave-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_unit_test_framework-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_timer-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_thread-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_test_exec_monitor-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_system-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_signals-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_serialization-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_regex-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_random-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_program_options-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_prg_exec_monitor-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_tr1l-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_tr1f-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_tr1-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_c99l-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_c99f-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_math_c99-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_locale-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_iostreams-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_graph-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_filesystem-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_exception-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_date_time-154.lib;C:\kdev\bprlocal\boost\1.54.0.0\lib\x86_32-windows_any-msvc_any\boost_chrono-154.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

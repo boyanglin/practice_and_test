@@ -77,9 +77,9 @@ namespace CPP_STD_TEST_AND_PRACTIVE_TS
     test_suite* CredentialTS::suite()
     {
         test_suite* suite = BOOST_TEST_SUITE("CredentialTS");
-        //suite->add(BOOST_TEST_CASE(&TestExists));
-        //suite->add(BOOST_TEST_CASE(&TestSave));
-        //suite->add(BOOST_TEST_CASE(&TestPrompt));
+        suite->add(BOOST_TEST_CASE(&TestExists));
+        suite->add(BOOST_TEST_CASE(&TestSave));
+        suite->add(BOOST_TEST_CASE(&TestPrompt));
         suite->add(BOOST_TEST_CASE(&TestChangePassword));
         return suite;
     }

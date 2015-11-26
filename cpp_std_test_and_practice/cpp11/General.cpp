@@ -1,17 +1,17 @@
 #include "General.h"
 
+
 #include <array>
 #include <numeric>
 
+void GeneralFuncTest()
+{
+}
 
 namespace General {
 
-
-
 	void VectorWrapperTestFunction() 
 	{
-
-		SHOW_FUNCTION_NAME;
 
 		VectorWrapper<long> testVector;
 		for (size_t i = 0; i < 10; ++i)
@@ -54,7 +54,6 @@ namespace General {
 		VectorWrapper<long> copyVector4 = VectorWrapper<long>(10, 3);
 
 		std::string a = "100";
-
 	}
 
 	void TestVectorReference() 

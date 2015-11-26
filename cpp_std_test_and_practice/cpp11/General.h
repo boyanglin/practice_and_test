@@ -8,6 +8,8 @@
 
 #pragma warning( disable : 4521 4522 )
 
+void GeneralFuncTest();
+
 namespace General {
 	template<class T>
 	class VectorWrapper {
@@ -190,6 +192,8 @@ namespace General {
 			std::swap(this->mString, other.mString);
 		}
 	public:
+		MockObject();
+
 		MockObject(const std::string & string)
 			:mString(string)
 		{
@@ -236,6 +240,7 @@ namespace General {
 			return *this;
 		}
 
+
 		std::string GetString() const
 		{
 			return mString;
@@ -244,6 +249,45 @@ namespace General {
 	};
 
 	MockObject TestFunc_ReturnConstArg(const MockObject & mockObject);
+
+	class ChainAssignmentObject
+	{
+	public:
+		ChainAssignmentObject() {}
+		ChainAssignmentObject(std::string msg)
+			: mMessage(msg)
+		{
+		}
+
+		ChainAssignmentObject(const ChainAssignmentObject & rhs)
+		{
+			std::cout << "ChainAssignmentObject(const ChainAssignmentObject & rhs)" << std::endl;
+			this->mMessage = rhs.mMessage;
+		}
+
+		ChainAssignmentObject operator=(const ChainAssignmentObject & rhs)
+		{
+			std::cout << "ChainAssignmentObject operator=(const ChainAssignmentObject & rhs)" << std::endl;
+			ChainAssignmentObject aTemp = rhs;
+			std::swap(this->mMessage, aTemp.mMessage);
+			return *this;
+		}
+
+		ChainAssignmentObject operator=(const std::string & rhs)
+		{
+			std::cout << "ChainAssignmentObject operator=(const std::string & rhs)" << std::endl;
+			operator=(ChainAssignmentObject(rhs));
+			return *this;
+		}
+
+		std::string GetMessage()
+		{
+			return mMessage;
+		}
+	private:
+		std::string mMessage;
+	};
+
 
 } //namespace General
 

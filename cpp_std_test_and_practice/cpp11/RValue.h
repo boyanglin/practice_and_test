@@ -35,6 +35,26 @@ private:
 	std::vector<Data> mVector;
 };
 
+	class Wedgit
+	{
+	public:
+		//class Member
+		//{
+		//public:
+		//	Member(const )
+
+		//};
+		//
+		//Member move_;
+		//Member not_move_;
+		std::string move_;
+		std::string not_move_;
+	public:
+		Wedgit(std::string &&not_to_move, std::string &&to_move)
+			:not_move_(not_to_move), move_(std::move(to_move))
+		{}
+	};
+
 } //namespace RValue
 
 #endif //R_VALUE_H_

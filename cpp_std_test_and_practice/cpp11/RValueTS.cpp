@@ -1,10 +1,10 @@
 #include "RValueTS.h"
+#include "RValue.h"
+#include <Utils/Utilities.h>
+
+#include <boost/date_time.hpp>
 
 #include <vector>
-
-#include <boost\date_time.hpp>
-
-#include "RValue.h"
 
 using namespace boost::unit_test_framework;
 
@@ -56,10 +56,21 @@ namespace CPP_STD_TEST_AND_PRACTIVE_TS {
 		class1.set<std::string>(std::move(szTest2), 2);
 	}
 
+	void TestWedgit()
+	{
+		std::string example_1 = "This is example 1.";
+		std::string example_2 = "This is example 2.";
+		RValue::Wedgit wedgit_1 = RValue::Wedgit(std::move(example_1), std::move(example_2));
+		PRINT_POD(example_1);
+		PRINT_POD(example_2);
+		RValue::Wedgit wedgit_2 = RValue::Wedgit("example3", "example4");
+	}
+
 	test_suite* RValueTS::suite() {
 		test_suite* suite = BOOST_TEST_SUITE("RValueTS");
 		suite->add(BOOST_TEST_CASE(&TestFuncs));
 		suite->add(BOOST_TEST_CASE(&TestClass1));
+		suite->add(BOOST_TEST_CASE(&TestWedgit));
 		return suite;
 	}
 } //namespace CPP_STD_TEST_AND_PRACTIVE_TS

@@ -10,7 +10,7 @@
 
 namespace EMCPP
 {
-    void runItem(unsigned int item);
+    void runItem(unsigned long item);
 
 	//Item 1: Understand template type deduction.
     ITEM_INIT(1)

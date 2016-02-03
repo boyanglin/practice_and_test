@@ -1,115 +1,149 @@
 #include "Items.h"
+#include "Exception.h"
 #include "Utilities.h"
 
+#include <functional>
+#include <iomanip>  
 #include <iostream>
 #include <memory>
+#include <map>
 
 #define RUN_ITEM(num) item##num::run()
 #define RUN_ITEM_CASE(num) case num: \
                                RUN_ITEM(num); \
                                break
 
-#define TEST_FUNC_DECL(func) void func() \
-                             { \
-                                 PRINT_FUNCTION_NAME;
+
+#define REGISTER_ITEM_FUN(item_num, item_run) \
+static Utils::ItemRunRegister item_run_register(item_num, item_run);
+
+#define RUN_FUNCTION_DECL(item_num) void run() \
+{ \
+	const unsigned long ITEM_NUM = item_num;\
+	PRINT_FUNCTION_NAME;
+
+#define RUN_FUNCTION_END(item_num)\
+	static_assert(ITEM_NUM == item_num, "The item number doesn't."); \
+} \
+REGISTER_ITEM_FUN(item_num, run)
 
 namespace Utils
 {
     class EmptyObject
     {
     };
+	class  ItemRunFunctions
+	{
+		friend struct ItemRunRegister;
+
+		std::map<unsigned long, std::function<void()>> item_runners_;
+
+		void register_run_function(unsigned long item_num, std::function<void()> item_run_func)
+		{
+			auto result = item_runners_.insert(std::make_pair(item_num, item_run_func));
+			if (!result.second)
+			{
+				ERROR("Item " << item_num << " has registered the run function.");
+			}
+		}
+
+	public:
+
+		void run(unsigned long item_num) const
+		{
+			PRINT_LINE("Running item " << item_num << " ...");
+			item_runners_.at(item_num)();
+		}
+	};
+
+	ItemRunFunctions& getItemRunFunctions()
+	{
+		static std::unique_ptr<ItemRunFunctions> item_run_functions = std::make_unique<ItemRunFunctions>();
+		return *item_run_functions;
+	}
+
+	struct ItemRunRegister
+	{
+		ItemRunRegister(unsigned long item_num, std::function<void()> item_run_func)
+		{
+			getItemRunFunctions().register_run_function(item_num, item_run_func);
+		}
+	};
+
 }
 
 namespace EMCPP
 {
-    void runItem(unsigned int item)
+
+    void runItem(unsigned long item_num)
     {
-        PRINT_LINE("Running item " << item << " ...");
-        switch (item)
-        {
-        RUN_ITEM_CASE(1);
-        RUN_ITEM_CASE(18);
-        RUN_ITEM_CASE(19);
-        default:
-            PRINT_LINE("Please select an item number.");
-        }
+		Utils::getItemRunFunctions().run(item_num);
     }
 
 	namespace item1
 	{
-		namespace
+		namespace case_1
 		{
-			template <class T>
-			std::string type_name()
+			template<typename T>
+			void f_1_1(T& param) // param is a reference
 			{
-				typedef typename std::remove_reference<T>::type TR;
-				std::unique_ptr<char, void(*)(void*)> own
-					(
-#ifndef _MSC_VER
-						abi::__cxa_demangle(typeid(TR).name(), nullptr,
-							nullptr, nullptr),
-#else
-						nullptr,
-#endif
-						std::free
-						);
-				std::string r = own != nullptr ? own.get() : typeid(TR).name();
-				if (std::is_const<TR>::value)
-					r += " const";
-				if (std::is_volatile<TR>::value)
-					r += " volatile";
-				if (std::is_lvalue_reference<T>::value)
-					r += "&";
-				else if (std::is_rvalue_reference<T>::value)
-					r += "&&";
-				return r;
+				PRINT_FUNCTION_NAME;
+				using value_type = T;
+				T a = param;
+				PRINT_MSG("Type of T: " << type_name<decltype(a)>().c_str());
+				PRINT_MSG("Type of param: " << type_name<decltype(param)>().c_str());
 			}
 
 			template<typename T>
-			void f_1(T& param) // param is a reference
+			void f_1_2(const T& param) // param is now a ref-to-const
 			{
+				PRINT_FUNCTION_NAME;
 				using value_type = T;
 				T a = param;
-				PRINT_LINE("Type of T: " << type_name<decltype(a)>().c_str());
-				PRINT_LINE("Type of T: " << type_name<decltype(param)>().c_str());
+				PRINT_MSG("Type of T: " << type_name<decltype(a)>().c_str());
+				PRINT_MSG("Type of param: " << type_name<decltype(param)>().c_str());
 			}
 
-			void case_1()
+			void example()
 			{
-				const int a = 1;
-				int x = 27; 
-				PRINT_LINE("x is an int");
-				PRINT_POD(x);
-				f_1(x);
+				PRINT_FUNCTION_NAME;
 
-				const int cx = x; 
-				PRINT_LINE("cx is a const int");
-				PRINT_POD(cx);
-				f_1(cx);
+				PRINT_AND_RUN_CODE(int x = 27);
+				PRINT_AND_RUN_CODE(f_1_1(x));
+				PRINT_AND_RUN_CODE(f_1_2(x)); 
+				PRINT_LINE("");
 
-				const int& rx = x; 
-				PRINT_LINE("rx is a reference to x as a const int");
-				PRINT_POD(rx);
-				f_1(rx);
+				PRINT_AND_RUN_CODE(const int cx = x); 
+				PRINT_AND_RUN_CODE(f_1_1(cx));
+				PRINT_AND_RUN_CODE(f_1_2(cx)); 
+				PRINT_LINE("");
+
+				PRINT_AND_RUN_CODE(const int& rx = x); 
+				PRINT_AND_RUN_CODE(f_1_1(rx));
+				PRINT_AND_RUN_CODE(f_1_2(rx));
+				PRINT_LINE("");
 			}
 		}
 
 		void templateTypeDeduction()
 		{
 			PRINT_FUNCTION_NAME;
-			case_1();
+			PRINT_LINE(std::setfill('=') << std::setw(50) << "" << std::setfill(' '));
+			case_1::example();
+			PRINT_LINE(std::setfill('=') << std::setw(50) << "" << std::setfill(' '));
 		}
 
-		void run()
-		{
+		RUN_FUNCTION_DECL(1)
 			templateTypeDeduction();
-		}
+		RUN_FUNCTION_END(1)
 	}
 
     //tem 18: Use std::unique_ptr for exclusive-ownership resource management.
     namespace item18
     {
-		TEST_FUNC_DECL(initialiseUniquePtr)
+		void initialiseUniquePtr()
+		{
+			PRINT_FUNCTION_NAME;
 
 			//http://www.cplusplus.com/reference/memory/unique_ptr/unique_ptr/
 
@@ -142,16 +176,18 @@ namespace EMCPP
 					~Foo() { std::cout << "~Foo dtor\n"; }
 				};
 
+#pragma warning ( disable : 4521 ) //warning C4521: 'EMCPP::item18::initialiseUniquePtr::D': multiple copy constructors specified
 				struct D { // deleter
 					D() {};
 					D(const D&) { std::cout << "D copy ctor\n"; }
-					D(D&) { std::cout << "D non-const copy ctor\n"; }
+					D(D&) { std::cout << "D non-const copy ctor\n"; } // C4521
 					D(D&&) { std::cout << "D move ctor \n"; }
 					void operator()(Foo* p) const {
 						std::cout << "D is deleting a Foo\n";
 						delete p;
 					};
 				};
+#pragma warning ( default : 4521)
 
 				std::cout << "Example constructor(1)...\n";
 				std::unique_ptr<Foo> up1;  // up1 is empty
@@ -200,20 +236,16 @@ namespace EMCPP
 			}
         }
 
-        void run()
-        {
+		RUN_FUNCTION_DECL(18)
             initialiseUniquePtr();
-        }
+		RUN_FUNCTION_END(18)
     } //namespace Item18
 
     //Item 19: Use std::shared_ptr for shared-ownership resource management.
     namespace item19
     {
-
-        void run()
-        {
-
-        }
+		RUN_FUNCTION_DECL(19);
+		RUN_FUNCTION_END(19);
     }//namespace Item19
 
 } //namespace EMCPP

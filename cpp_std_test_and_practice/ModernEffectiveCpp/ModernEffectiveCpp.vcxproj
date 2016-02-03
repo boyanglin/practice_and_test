@@ -80,6 +80,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\ModernEffectiveCpp\Items.h" />
+    <ClInclude Include="..\..\src\Utils\Exception.h" />
     <ClInclude Include="..\..\src\Utils\Utilities.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

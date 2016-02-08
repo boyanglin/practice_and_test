@@ -6,8 +6,8 @@
 
 #define SETW(num) std::cout << std::setw(num)
 #define PRINT_VALUE(val) std::cout << val
-#define PRINT_VARIABLE(var) PRINT_VALUE(#var)
-#define PRINT_POD(var) PRINT_VARIABLE(var); \
+#define PRINT_VARIABLE_NAME(var) PRINT_VALUE(#var)
+#define PRINT_POD(var) PRINT_VARIABLE_NAME(var); \
 						std::cout << " : " << var <<std::endl;
 #define PRINT_VECTOR(var) PRINT_VARIABLE(var);\
 						std::cout << " : ";\

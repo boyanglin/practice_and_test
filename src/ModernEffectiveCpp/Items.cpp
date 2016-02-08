@@ -7,6 +7,7 @@
 #include <iostream>
 #include <memory>
 #include <map>
+#include <stdio.h>
 
 #define RUN_ITEM(num) item##num::run()
 #define RUN_ITEM_CASE(num) case num: \
@@ -26,6 +27,9 @@ static Utils::ItemRunRegister item_run_register(item_num, item_run);
 	static_assert(ITEM_NUM == item_num, "The item number doesn't."); \
 } \
 REGISTER_ITEM_FUN(item_num, run)
+
+#define PRINT_SEPERATOR_LINE \
+		PRINT_LINE(std::setfill('=') << std::setw(50) << "" << std::setfill(' '))
 
 namespace Utils
 {
@@ -85,9 +89,9 @@ namespace EMCPP
 		namespace case_1
 		{
 			template<typename T>
-			void f_1_1(T& param) // param is a reference
+			void f_1(T& param) // param is a reference
 			{
-				PRINT_FUNCTION_NAME;
+				PRINT_VALUE("Call ");PRINT_FUNCTION_NAME;
 				using value_type = T;
 				T a = param;
 				PRINT_MSG("Type of T: " << type_name<decltype(a)>().c_str());
@@ -95,9 +99,9 @@ namespace EMCPP
 			}
 
 			template<typename T>
-			void f_1_2(const T& param) // param is now a ref-to-const
+			void f_2(const T& param) // param is now a ref-to-const
 			{
-				PRINT_FUNCTION_NAME;
+				PRINT_VALUE("Call ");PRINT_FUNCTION_NAME;
 				using value_type = T;
 				T a = param;
 				PRINT_MSG("Type of T: " << type_name<decltype(a)>().c_str());
@@ -108,19 +112,182 @@ namespace EMCPP
 			{
 				PRINT_FUNCTION_NAME;
 
+				PRINT_LINE("");
+				PRINT_LINE("f_1 function signature:");
+				PRINT_LINE("template<typename T>");
+				PRINT_LINE("void f_1(T& param)");
+				PRINT_LINE("");
+
+				PRINT_LINE("");
+				PRINT_LINE("f_2 function signature:");
+				PRINT_LINE("template<typename T>");
+				PRINT_LINE("void f_2(const T& param)");
+				PRINT_LINE("");
+
 				PRINT_AND_RUN_CODE(int x = 27);
-				PRINT_AND_RUN_CODE(f_1_1(x));
-				PRINT_AND_RUN_CODE(f_1_2(x)); 
+				PRINT_AND_RUN_CODE(f_1(x));
+				PRINT_AND_RUN_CODE(f_2(x)); 
 				PRINT_LINE("");
 
 				PRINT_AND_RUN_CODE(const int cx = x); 
-				PRINT_AND_RUN_CODE(f_1_1(cx));
-				PRINT_AND_RUN_CODE(f_1_2(cx)); 
+				PRINT_AND_RUN_CODE(f_1(cx));
+				PRINT_AND_RUN_CODE(f_2(cx)); 
 				PRINT_LINE("");
 
 				PRINT_AND_RUN_CODE(const int& rx = x); 
-				PRINT_AND_RUN_CODE(f_1_1(rx));
-				PRINT_AND_RUN_CODE(f_1_2(rx));
+				PRINT_AND_RUN_CODE(f_1(rx));
+				PRINT_AND_RUN_CODE(f_2(rx));
+				PRINT_LINE("");
+			}
+		}
+
+		namespace case_2
+		{
+			template<typename T>
+			void f_1(T&& param) // param is a universal reference
+			{
+				PRINT_VALUE("Call ");PRINT_FUNCTION_NAME;
+				using value_type = T;
+				T a = param;
+				PRINT_MSG("Type of T: " << type_name<decltype(a)>().c_str());
+				PRINT_MSG("Type of param: " << type_name<decltype(param)>().c_str());
+			}
+
+			void example()
+			{
+				PRINT_FUNCTION_NAME;
+
+				PRINT_LINE("");
+				PRINT_LINE("f_1 function signature:");
+				PRINT_LINE("template<typename T>");
+				PRINT_LINE("void f_1(T&& param)");
+				PRINT_LINE("");
+
+				PRINT_AND_RUN_CODE(int x = 27); 
+				PRINT_AND_RUN_CODE(f_1(x));
+				PRINT_LINE("");
+
+				PRINT_AND_RUN_CODE(const int cx = x); 
+				PRINT_AND_RUN_CODE(f_1(cx));
+				PRINT_LINE("");
+
+				PRINT_AND_RUN_CODE(const int& rx = x); 
+				PRINT_AND_RUN_CODE(f_1(rx));
+				PRINT_LINE("");
+
+				PRINT_AND_RUN_CODE(f_1(27));
+				PRINT_LINE("");
+
+			}
+		}
+
+		namespace case_3
+		{
+			template<typename T>
+			void f_1(T param) // param is passed by value
+			{
+				PRINT_VALUE("Call ");PRINT_FUNCTION_NAME;
+				using value_type = T;
+				T a = param;
+				PRINT_MSG("Type of T: " << type_name<decltype(a)>().c_str());
+				PRINT_MSG("Type of param: " << type_name<decltype(param)>().c_str());
+			}
+
+			void example()
+			{
+				PRINT_FUNCTION_NAME;
+
+				PRINT_LINE("");
+				PRINT_LINE("f_1 function signature:");
+				PRINT_LINE("template<typename T>");
+				PRINT_LINE("void f_1(T param)");
+				PRINT_LINE("");
+
+				PRINT_AND_RUN_CODE(int x = 27);
+				PRINT_AND_RUN_CODE(f_1(x));
+				PRINT_LINE("");
+
+				PRINT_AND_RUN_CODE(const int cx = x);
+				PRINT_AND_RUN_CODE(f_1(cx));
+				PRINT_LINE("");
+
+				PRINT_AND_RUN_CODE(const int& rx = x);
+				PRINT_AND_RUN_CODE(f_1(rx));
+				PRINT_LINE("");
+
+				PRINT_AND_RUN_CODE(const char* const ptr = "Fun with pointers");// ptr is const pointer to const object
+				PRINT_AND_RUN_CODE(f_1(ptr)); // pass arg of type const char * const
+				PRINT_LINE("");
+			}
+		}
+
+		namespace ArrayArguments
+		{
+			template<typename T>
+			void f_1(T param)
+			{
+				PRINT_VALUE("Call ");PRINT_FUNCTION_NAME;
+				using value_type = T;
+				T a = param;
+				PRINT_MSG("Type of T: " << type_name<decltype(a)>().c_str());
+				PRINT_MSG("Type of param: " << type_name<decltype(param)>().c_str());
+			}
+
+			template<typename T>
+			void f_2(T& param)
+			{
+				PRINT_VALUE("Call ");PRINT_FUNCTION_NAME;
+				using value_type = T;
+				//T a = param;
+				//PRINT_MSG("Type of T: " << type_name<decltype(a)>().c_str());
+				PRINT_MSG("Type of param: " << type_name<decltype(param)>().c_str());
+			}
+
+			template<typename T, std::size_t N> // see info
+			constexpr std::size_t arraySize(T(&)[N]) noexcept // below on
+			{ // constexpr
+				PRINT_VALUE("Call ");PRINT_FUNCTION_NAME;
+				return N; 
+			}
+
+			void example()
+			{
+				PRINT_FUNCTION_NAME;
+				
+				PRINT_AND_RUN_CODE(const char name[] = "A name");
+				PRINT_AND_RUN_CODE(const char * ptrToName = name);
+				PRINT_LINE("");
+
+				PRINT_LINE("f_1 function signature:");
+				PRINT_LINE("template<typename T>");
+				PRINT_LINE("void f_1(T param)");
+				PRINT_LINE("");
+
+				PRINT_AND_RUN_CODE(f_1(name));
+				PRINT_LINE("");
+
+				PRINT_AND_RUN_CODE(f_1(ptrToName));
+				PRINT_LINE("");
+
+				PRINT_LINE("f_2 function signature:");
+				PRINT_LINE("template<typename T>");
+				PRINT_LINE("void f_2(T& param)");
+				PRINT_LINE("");
+
+				PRINT_AND_RUN_CODE(f_2(name));
+				PRINT_LINE("");
+
+				PRINT_LINE("template<typename T, std::size_t N>");
+				PRINT_LINE("constexpr std::size_t arraySize(T(&)[N]) noexcept");
+				PRINT_LINE("");
+
+				PRINT_AND_RUN_CODE(char mappedVals[arraySize(name)]);
+				PRINT_AND_RUN_CODE(const auto sizeOfName = sizeof(name) / sizeof(char));
+				PRINT_AND_RUN_CODE(const auto sizeOfMappedVals = sizeof(mappedVals) / sizeof(char));
+				static_assert(sizeOfName == sizeOfMappedVals, "size of two arrays are different.");
+
+				PRINT_POD(sizeOfName);
+				PRINT_POD(sizeOfMappedVals);
 				PRINT_LINE("");
 			}
 		}
@@ -128,9 +295,16 @@ namespace EMCPP
 		void templateTypeDeduction()
 		{
 			PRINT_FUNCTION_NAME;
-			PRINT_LINE(std::setfill('=') << std::setw(50) << "" << std::setfill(' '));
+			PRINT_SEPERATOR_LINE;
 			case_1::example();
-			PRINT_LINE(std::setfill('=') << std::setw(50) << "" << std::setfill(' '));
+			PRINT_SEPERATOR_LINE;
+			case_2::example();
+			PRINT_SEPERATOR_LINE;
+			case_3::example();
+			PRINT_SEPERATOR_LINE;
+			ArrayArguments::example();
+			PRINT_SEPERATOR_LINE;
+
 		}
 
 		RUN_FUNCTION_DECL(1)

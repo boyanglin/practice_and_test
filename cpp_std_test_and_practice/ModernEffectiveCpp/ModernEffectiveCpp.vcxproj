@@ -49,7 +49,7 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
@@ -88,8 +88,12 @@
     <ResourceCompile Include="ModernEffectiveCpp.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\ModernEffectiveCpp\AppRunner.cpp" />
-    <ClCompile Include="..\..\src\ModernEffectiveCpp\Items.cpp" />
+    <ClCompile Include="..\..\src\ModernEffectiveCpp\AppRunner.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Level4</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ModernEffectiveCpp\Items.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Level1</WarningLevel>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

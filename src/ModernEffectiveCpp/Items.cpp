@@ -84,26 +84,25 @@ namespace EMCPP
 
 	namespace item1
 	{
-		namespace case_1
+		// ParamType is a Reference or Pointer, but not a Universal Reference
+		namespace case_1 
 		{
 			template<typename T>
 			void f_1(T& param) // param is a reference
 			{
-				PRINT_VALUE("Call ");PRINT_FUNCTION_NAME;
-				using value_type = T;
-				T a = param;
-				PRINT_TYPE(a);
-				PRINT_TYPE(param);
+				PRINT_CALL_FUNCTION_INDENT(1);
+				PRINT_CODE_INDENT(1, T a = param);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, param);
 			}
 
 			template<typename T>
 			void f_2(const T& param) // param is now a ref-to-const
 			{
-				PRINT_VALUE("Call ");PRINT_FUNCTION_NAME;
-				using value_type = T;
-				T a = param;
-				PRINT_TYPE(a);
-				PRINT_TYPE(param);
+				PRINT_CALL_FUNCTION_INDENT(1);
+				PRINT_CODE_INDENT(1, T a = param);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, param);
 			}
 
 			void example()
@@ -139,16 +138,16 @@ namespace EMCPP
 			}
 		}
 
+		// ParamType is a Universal Reference
 		namespace case_2
 		{
 			template<typename T>
 			void f_1(T&& param) // param is a universal reference
 			{
-				PRINT_VALUE("Call ");PRINT_FUNCTION_NAME;
-				using value_type = T;
-				T a = param;
-				PRINT_TYPE(a);
-				PRINT_TYPE(param);
+				PRINT_CALL_FUNCTION_INDENT(1);
+				PRINT_CODE_INDENT(1, T a = param);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, param);
 			}
 
 			void example()
@@ -179,16 +178,16 @@ namespace EMCPP
 			}
 		}
 
+		//ParamType is Neither a Pointer nor a Reference
 		namespace case_3
 		{
 			template<typename T>
 			void f_1(T param) // param is passed by value
 			{
-				PRINT_VALUE("Call ");PRINT_FUNCTION_NAME;
-				using value_type = T;
-				T a = param;
-				PRINT_TYPE(a);
-				PRINT_TYPE(param);
+				PRINT_CALL_FUNCTION_INDENT(1);
+				PRINT_CODE_INDENT(1, T a = param);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, param);
 			}
 
 			void example()
@@ -224,21 +223,19 @@ namespace EMCPP
 			template<typename T>
 			void f_1(T param)
 			{
-				PRINT_VALUE("Call ");PRINT_FUNCTION_NAME;
-				using value_type = T;
-				T a = param;
-				PRINT_TYPE(a);
-				PRINT_TYPE(param);
+				PRINT_CALL_FUNCTION_INDENT(1);
+				PRINT_CODE_INDENT(1, T a = param);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, param);
 			}
 
 			template<typename T>
 			void f_2(T& param)
 			{
-				PRINT_VALUE("Call ");PRINT_FUNCTION_NAME;
-				using value_type = T;
-				value_type a = "";
-				PRINT_TYPE(a);
-				PRINT_TYPE(param);
+				PRINT_CALL_FUNCTION_INDENT(1);
+				PRINT_CODE_INDENT(1, T a = "");
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, param);
 			}
 
 			template<typename T, std::size_t N> 
@@ -246,7 +243,7 @@ namespace EMCPP
 			{ // constexpr
 #pragma message("Call " __FUNCTION__)
 				PRINT_VALUE("Call "); PRINT_FUNCTION_NAME;
-				PRINT_TYPE(param);
+				PRINT_TYPE_INDENT(1, param);
 				return N; 
 			}
 
@@ -305,21 +302,19 @@ namespace EMCPP
 			template<class T>
 			void f_1(T param)
 			{
-				PRINT_VALUE("Call ");PRINT_FUNCTION_NAME;
-				using value_type = T;
-				T a = param;
-				PRINT_TYPE(a);
-				PRINT_TYPE(param);
+				PRINT_CALL_FUNCTION_INDENT(1);
+				PRINT_CODE_INDENT(1, T a = param);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, param);
 			}
 
 			template<class T>
 			void f_2(T& param)
 			{
-				PRINT_VALUE("Call ");PRINT_FUNCTION_NAME;
-				using value_type = T;
-				T *a = param;
-				PRINT_TYPE(a);
-				PRINT_TYPE(param);
+				PRINT_CALL_FUNCTION_INDENT(1);
+				PRINT_CODE_INDENT(1, T *a = param);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, param);
 			}
 
 			void example()
@@ -381,6 +376,112 @@ namespace EMCPP
 		RUN_FUNCTION_DECL(1)
 			templateTypeDeduction();
 		RUN_FUNCTION_END(1)
+	}
+
+	namespace item2 //item2: Understand auto type deduction
+	{
+		//ParamType is a Reference or Pointer, but not a Universal Reference
+		namespace Case1And3
+		{
+			template<typename T> // conceptual template for deducing type of auto x 
+			std::string func_for_x(T param)
+			{
+				PRINT_CALL_FUNCTION_INDENT(1);
+				PRINT_CODE_INDENT(1, T a = param);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, param);
+				return TYPE_NAME(param);
+			}
+
+			template<typename T> // conceptual template for deducing type of auto& x 
+			std::string func_for_rx(T& param)
+			{
+				PRINT_CALL_FUNCTION_INDENT(1);
+				PRINT_CODE_INDENT(1, T a = param);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, param);
+				return TYPE_NAME(param);
+			}
+
+			template<typename T> // conceptual template for deducing type of const auto
+			std::string func_for_cx(const T param)
+			{
+				PRINT_CALL_FUNCTION_INDENT(1);
+				PRINT_CODE_INDENT(1, T a = param);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, param);
+				return TYPE_NAME(param);
+			}
+
+			template<typename T> // conceptual template for deducing type of const auto &
+			std::string func_for_crx(const T& param)
+			{
+				PRINT_CALL_FUNCTION_INDENT(1);
+				PRINT_CODE_INDENT(1, T a = param);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, param);
+				return TYPE_NAME(param);
+			}
+		
+			void example()
+			{
+				PRINT_FUNCTION_NAME;
+				PRINT_EMPTY_LINE;
+
+				PRINT_LINE("Function Signature:");
+				PRINT_LINE("template<typename T>");
+				PRINT_LINE("void func_for_x(T param)");
+				PRINT_EMPTY_LINE;
+
+				PRINT_CODE(auto x = 27);
+				PRINT_TYPE(x);
+				PRINT_CODE(std::string xType = Case1And3::func_for_x(27)); 
+				ASSERT(xType == TYPE_NAME(x), "Type doesn't match.");
+				PRINT_EMPTY_LINE;
+
+				PRINT_LINE("Function Signature:");
+				PRINT_LINE("template<typename T>");
+				PRINT_LINE("void func_for_rx(T& param)");
+				PRINT_EMPTY_LINE;
+
+				PRINT_CODE(auto& rx = x);
+				PRINT_TYPE(rx);
+				PRINT_CODE(std::string rxType = Case1And3::func_for_rx(x)); 
+				ASSERT(rxType == TYPE_NAME(rx), "Type doesn't match.");
+				PRINT_EMPTY_LINE;
+
+
+				PRINT_LINE("Function Signature:");
+				PRINT_LINE("template<typename T>");
+				PRINT_LINE("void func_for_cx(const T param)");
+				PRINT_EMPTY_LINE;
+
+				PRINT_CODE(const auto cx = x);	
+				PRINT_TYPE(cx);
+				PRINT_CODE(std::string cxType = Case1And3::func_for_cx(x)); 
+				ASSERT(cxType == TYPE_NAME(cx), "Type doesn't match.");
+				PRINT_EMPTY_LINE;
+
+				PRINT_CODE(const auto& crx = x);
+				PRINT_TYPE(crx);
+				PRINT_CODE(std::string crxType = Case1And3::func_for_crx(x));
+				ASSERT(crxType == TYPE_NAME(crx), "Type doesn't match.");
+				PRINT_EMPTY_LINE;
+			}
+		}
+
+
+
+		void autoTypeDeduction()
+		{
+			PRINT_FUNCTION_NAME;
+			PRINT_SEPERATOR_LINE;
+			Case1And3::example();
+			PRINT_SEPERATOR_LINE;
+		}
+		RUN_FUNCTION_DECL(2)
+			autoTypeDeduction();
+		RUN_FUNCTION_END(2)
 	}
 
     //tem 18: Use std::unique_ptr for exclusive-ownership resource management.

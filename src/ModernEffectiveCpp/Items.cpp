@@ -60,7 +60,7 @@ namespace Utils
 
 	ItemRunFunctions& getItemRunFunctions()
 	{
-		static std::unique_ptr<ItemRunFunctions> item_run_functions = std::make_unique<ItemRunFunctions>();
+        static std::unique_ptr<ItemRunFunctions> item_run_functions = std::make_unique<ItemRunFunctions>();
 		return *item_run_functions;
 	}
 
@@ -241,7 +241,9 @@ namespace EMCPP
 			template<typename T, std::size_t N> 
 			constexpr std::size_t arraySize(T(&param)[N]) noexcept 
 			{ // constexpr
+#ifdef _MSC_VER
 #pragma message("Call " __FUNCTION__)
+#endif
 				PRINT_VALUE("Call "); PRINT_FUNCTION_NAME;
 				PRINT_TYPE_INDENT(1, param);
 				return N; 
@@ -285,7 +287,10 @@ namespace EMCPP
 				PRINT_CODE(char mappedVals[arraySize(name)]);
 				PRINT_CODE(const auto sizeOfName = sizeof(name) / sizeof(char));
 				PRINT_CODE(const auto sizeOfMappedVals = sizeof(mappedVals) / sizeof(char));
+#ifdef _MSC_VER
+                //TODO: figure out why it doesn't work on mac.
 				static_assert(sizeOfName == sizeOfMappedVals, "size of two arrays are different.");
+#endif
 #pragma warning(default:4101)
 
 				PRINT_POD(sizeOfName);

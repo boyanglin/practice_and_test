@@ -86,7 +86,7 @@ std::string type_name()
 	typedef typename std::remove_reference<T>::type TR;
 	std::unique_ptr<char, void(*)(void*)> own
 		(
-#ifndef _MSC_VER
+#ifdef _MSC_VER
 			abi::__cxa_demangle(typeid(TR).name(), nullptr,
 				nullptr, nullptr),
 #else

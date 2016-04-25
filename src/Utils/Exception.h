@@ -66,13 +66,14 @@ public:
 		{
 			Exception local = rhs;
 			std::swap(local, *this);
+            return *this;
 		}
 		catch (std::exception & error)
 		{
 			std::cout << "ERROR: An error occurs when construct Excpetion object: ";
 			std::cout << error.what() << std::endl;
 		}
-
+        return *this;
 	}
 
 	virtual ~Exception() override

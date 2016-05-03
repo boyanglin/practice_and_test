@@ -3,7 +3,7 @@
 //#include <stdlib.h>
 #include <iostream>
 
-int main(int argc, char *argv[])
+int main(int argc, const char *argv[])
 {
     if (argc > 0)
     {

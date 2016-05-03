@@ -36,15 +36,26 @@
 #define PRINT_MSG(msg) \
 		PRINT_MSG_INDENT(0, msg)
 
+#define PRINT_INFO_INDENT(num, info)\
+		PRINT_INI(num); PRINT_VALUE("info - "); PRINT_LINE(info);
+
+#define PRINT_INFO(info)\
+		PRINT_INFO_INDENT(0, info)
+
 #define PRINT_ERR(err) \
 		PRINT_INI(0); PRINT_VALUE("err - "); PRINT_LINE(err);
 
-#define PRINT_POD(var) \
-		PRINT_CODE_INDENT(0, var)
-
 #define PRINT_POD_INDENT(num, var) \
-		PRINT_INI(num); PRINT_VARIABLE_NAME(var); \
-		std::cout << " : " << var <<std::endl;
+		PRINT_INFO_INDENT(num, #var << " == " << var)
+
+#define PRINT_POD(var) \
+		PRINT_POD_INDENT(0, var)
+
+#define PRINT_STRING_INDENT(num, var) \
+		PRINT_INFO_INDENT(num, #var << " == " << var.c_str());
+
+#define PRINT_STRING(var)\
+		PRINT_STRING_INDENT(0, var);
 
 #define PRINT_CODE_INDENT(num, code) \
 		PRINT_INI(num) ; PRINT_VALUE("code - "); PRINT_LINE(#code << ";"); code 
@@ -65,7 +76,7 @@
 		type_name<decltype(var)>()
 
 #define PRINT_TYPE_INDENT(num, var) \
-		PRINT_MSG_INDENT(num, "Type of " #var ": " << TYPE_NAME(var).c_str())
+		PRINT_INFO_INDENT(num, "Type of " #var ": " << TYPE_NAME(var).c_str())
 
 #define PRINT_TYPE(var) \
 		PRINT_TYPE_INDENT(0, var)

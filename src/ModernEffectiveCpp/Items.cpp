@@ -470,7 +470,58 @@ namespace EMCPP
 			}
 		}
 
+		namespace Case2
+		{
+			template<class T>
+			std::string func_takes_rvalue(T&& param)
+			{
+				PRINT_CALL_FUNCTION_INDENT(1);
+				PRINT_CODE_INDENT(1, T a = param);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, param);
+				return TYPE_NAME(param);
+			}
 
+			void example()
+			{
+				PRINT_FUNCTION_NAME;
+				PRINT_EMPTY_LINE;
+
+				PRINT_LINE("Function Signature:");
+				PRINT_LINE("template<class T>");
+				PRINT_LINE("void func_takes_rvalue(T&& param)");
+				PRINT_EMPTY_LINE;
+
+				PRINT_CODE(int x = 27);
+				PRINT_CODE(auto&& uref1 = x); // x is int and lvalue, so uref1's type is int&
+				PRINT_TYPE(uref1);
+				PRINT_CODE(std::string uref1Type = Case2::func_takes_rvalue(x));
+				ASSERT(uref1Type == TYPE_NAME(uref1), "Type doesn't match.");
+				PRINT_EMPTY_LINE;
+
+				PRINT_CODE(const int cx = x);
+				PRINT_CODE(auto&& uref2 = cx); // cx is const int and lvalue so uref2's type is const int&
+				PRINT_TYPE(uref2);
+				PRINT_CODE(std::string uref2Type = Case2::func_takes_rvalue(cx));
+				ASSERT(uref2Type == TYPE_NAME(uref2), "Type doesn't match.");
+				PRINT_EMPTY_LINE;
+
+				PRINT_CODE(const int& crx = x);
+				PRINT_CODE(auto&& uref3 = crx);
+				PRINT_TYPE(uref3);
+				PRINT_CODE(std::string uref3Type = Case2::func_takes_rvalue(crx));
+				ASSERT(uref3Type == TYPE_NAME(uref3), "Type doesn't match.");
+				PRINT_EMPTY_LINE;
+
+				PRINT_CODE(auto&& uref4 = 27); // 27 is int and rvalue, so uref3's type is int&&
+				PRINT_TYPE(uref4);
+				PRINT_CODE(std::string uref4Type = Case2::func_takes_rvalue(27));
+				PRINT_STRING(uref4Type);
+
+				PRINT_CODE(auto&& uref5 = std::move(x));
+				PRINT_TYPE(uref5);
+			}
+		}
 
 		void autoTypeDeduction()
 		{
@@ -478,7 +529,10 @@ namespace EMCPP
 			PRINT_SEPERATOR_LINE;
 			Case1And3::example();
 			PRINT_SEPERATOR_LINE;
+			Case2::example();
+			PRINT_SEPERATOR_LINE;
 		}
+
 		RUN_FUNCTION_DECL(2)
 			autoTypeDeduction();
 		RUN_FUNCTION_END(2)

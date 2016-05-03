@@ -8,6 +8,8 @@
 #define ITEM_END void run(); \
              }
 
+#define COMMA ,
+
 namespace EMCPP
 {
     void runItem(unsigned long item);

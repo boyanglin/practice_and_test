@@ -2,6 +2,7 @@
 #include "Exception.h"
 #include "Utilities.h"
 
+#include <deque>
 #include <functional>
 #include <iomanip>  
 #include <iostream>
@@ -576,8 +577,24 @@ namespace EMCPP
 
 			//Case2::example();
 			template<typename Container, typename Index>	// C++14;
-			auto authAndAccess(Container& c, Index i)		// not quite
+			auto authAndAccess1(Container& c, Index i)		// not quite
 			{												// correct
+				//during template type deduction, the reference-ness of an initializing expression is ignored
+
+				PRINT_CODE_INDENT(1, Container a = c);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, c);
+				PRINT_TYPE_INDENT(1, c[i]);
+				PRINT_CODE_INDENT(1, return c[i]); // return type deduced from c[i]
+			}
+
+			//this is the refinement of authAndAccess1
+			template<typename Container, typename Index> // C++14; works, but still requires
+			decltype(auto) authAndAccess_Refinement(Container& c, Index i) 
+			{ 
+				PRINT_CODE_INDENT(1, Container a = c);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, c);
 				PRINT_TYPE_INDENT(1, c[i]);
 				PRINT_CODE_INDENT(1, return c[i]); // return type deduced from c[i]
 			}
@@ -586,15 +603,40 @@ namespace EMCPP
 			{
 				PRINT_FUNCTION_NAME;
 
-				PRINT_EMPTY_LINE;
-				PRINT_LINE("Function Signature:");
-				PRINT_LINE("template<typename Container, typename Index>");
-				PRINT_LINE("auto authAndAccess(Container& c, Index i)");
-				PRINT_EMPTY_LINE;
+				{
+					PRINT_EMPTY_LINE;
+					PRINT_LINE("Function Signature:");
+					PRINT_LINE("template<typename Container, typename Index>");
+					PRINT_LINE("auto authAndAccess1(Container& c, Index i)");
+					PRINT_EMPTY_LINE;
 
-				PRINT_CODE(std::vector<bool> aVector{ true COMMA false COMMA true });
-				PRINT_CODE(bool aResult = authAndAccess(aVector COMMA 2));
-				PRINT_TYPE(aResult);
+					PRINT_CODE(std::vector<bool> aVector{ true COMMA false COMMA true });
+					PRINT_CODE(auto aResult = authAndAccess1(aVector COMMA 2));
+					PRINT_TYPE(aResult);
+
+					/*************** NOTES ************** 
+					- Cannot compile due to the following error
+					- error C2106: '=': left operand must be l-value
+					*/ 
+					//PRINT_CODE(std::deque<int> myDeque(5, 1));
+					//PRINT_CODE(authAndAccess1(myDeque COMMA 5) = 10);
+					//PRINT_TYPE(aResult);
+					
+
+					PRINT_EMPTY_LINE;
+				}
+
+				{
+					PRINT_LINE("Function Signature:");
+					PRINT_LINE("template<typename Container, typename Index>");
+					PRINT_LINE("decltype(auto) authAndAccess_Refinement(Container& c, Index i)");
+					PRINT_EMPTY_LINE;
+
+					PRINT_CODE(std::vector<bool> aVector{ true COMMA false COMMA true });
+					PRINT_CODE(auto aResult = authAndAccess_Refinement(aVector COMMA 2));
+					PRINT_TYPE(aResult);
+					PRINT_EMPTY_LINE;
+				}
 			}
 
 		}

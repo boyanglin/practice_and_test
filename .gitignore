@@ -154,3 +154,5 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+/cpp_std_test_and_practice/cpp_std_test_and_practice.VC.opendb
+/codility_solution/codility_lession/codility_lession.VC.db

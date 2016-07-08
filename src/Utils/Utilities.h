@@ -8,8 +8,13 @@
 #define SETW(num) \
 		std::cout << std::setw(num)
 
-#define PRINT_INI(num) \
-		SETW(8 + num * 8)
+//#define PRINT_INI(num) \
+//		SETW(8 + num * 8)
+
+#define TAB \
+		std::cout << "\t"
+
+#define PRINT_INI(num) for (long counter = num; counter > 0; --counter) TAB
 
 #define PRINT_VALUE(val) \
 		std::cout << val
@@ -36,15 +41,26 @@
 #define PRINT_MSG(msg) \
 		PRINT_MSG_INDENT(0, msg)
 
+#define PRINT_INFO_INDENT(num, info)\
+		PRINT_INI(num); PRINT_VALUE("info - "); PRINT_LINE(info);
+;
+#define PRINT_INFO(info)\
+		PRINT_INFO_INDENT(0, info)
+
 #define PRINT_ERR(err) \
 		PRINT_INI(0); PRINT_VALUE("err - "); PRINT_LINE(err);
 
-#define PRINT_POD(var) \
-		PRINT_CODE_INDENT(0, var)
-
 #define PRINT_POD_INDENT(num, var) \
-		PRINT_INI(num); PRINT_VARIABLE_NAME(var); \
-		std::cout << " : " << var <<std::endl;
+		PRINT_INFO_INDENT(num, #var << " == " << var)
+
+#define PRINT_POD(var) \
+		PRINT_POD_INDENT(0, var)
+
+#define PRINT_STRING_INDENT(num, var) \
+		PRINT_INFO_INDENT(num, #var << " == " << var.c_str());
+
+#define PRINT_STRING(var)\
+		PRINT_STRING_INDENT(0, var);
 
 #define PRINT_CODE_INDENT(num, code) \
 		PRINT_INI(num) ; PRINT_VALUE("code - "); PRINT_LINE(#code << ";"); code 
@@ -65,7 +81,7 @@
 		type_name<decltype(var)>()
 
 #define PRINT_TYPE_INDENT(num, var) \
-		PRINT_MSG_INDENT(num, "Type of " #var ": " << TYPE_NAME(var).c_str())
+		PRINT_INFO_INDENT(num, "Type of " #var ": " << TYPE_NAME(var).c_str())
 
 #define PRINT_TYPE(var) \
 		PRINT_TYPE_INDENT(0, var)
@@ -85,15 +101,15 @@ std::string type_name()
 {
 	typedef typename std::remove_reference<T>::type TR;
 	std::unique_ptr<char, void(*)(void*)> own
-		(
-#ifdef _MSC_VER
-			abi::__cxa_demangle(typeid(TR).name(), nullptr,
-				nullptr, nullptr),
-#else
+	(
+//#ifdef WIN32
 			nullptr,
-#endif
-			std::free
-			);
+//#else
+//			abi::__cxa_demangle(typeid(TR).name(), nullptr,
+//				nullptr, nullptr),
+//#endif
+		std::free
+	);
 	std::string r = own != nullptr ? own.get() : typeid(TR).name();
 	if (std::is_const<TR>::value)
 		r += " const";

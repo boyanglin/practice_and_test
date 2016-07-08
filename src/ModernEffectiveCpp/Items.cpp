@@ -2,6 +2,7 @@
 #include "Exception.h"
 #include "Utilities.h"
 
+#include <deque>
 #include <functional>
 #include <iomanip>  
 #include <iostream>
@@ -32,9 +33,9 @@ REGISTER_ITEM_FUN(item_num, run)
 
 namespace Utils
 {
-    class EmptyObject
-    {
-    };
+	class EmptyObject
+	{
+	};
 	class  ItemRunFunctions
 	{
 		friend struct ItemRunRegister;
@@ -61,7 +62,7 @@ namespace Utils
 
 	ItemRunFunctions& getItemRunFunctions()
 	{
-        static std::unique_ptr<ItemRunFunctions> item_run_functions = std::make_unique<ItemRunFunctions>();
+		static std::unique_ptr<ItemRunFunctions> item_run_functions = std::make_unique<ItemRunFunctions>();
 		return *item_run_functions;
 	}
 
@@ -78,15 +79,15 @@ namespace Utils
 namespace EMCPP
 {
 
-    void runItem(unsigned long item_num)
-    {
+	void runItem(unsigned long item_num)
+	{
 		Utils::getItemRunFunctions().run(item_num);
-    }
+	}
 
 	namespace item1
 	{
 		// ParamType is a Reference or Pointer, but not a Universal Reference
-		namespace case_1 
+		namespace case_1
 		{
 			template<typename T>
 			void f_1(T& param) // param is a reference
@@ -124,15 +125,15 @@ namespace EMCPP
 
 				PRINT_CODE(int x = 27);
 				PRINT_CODE(f_1(x));
-				PRINT_CODE(f_2(x)); 
+				PRINT_CODE(f_2(x));
 				PRINT_EMPTY_LINE;
 
-				PRINT_CODE(const int cx = x); 
+				PRINT_CODE(const int cx = x);
 				PRINT_CODE(f_1(cx));
-				PRINT_CODE(f_2(cx)); 
+				PRINT_CODE(f_2(cx));
 				PRINT_EMPTY_LINE;
 
-				PRINT_CODE(const int& rx = x); 
+				PRINT_CODE(const int& rx = x);
 				PRINT_CODE(f_1(rx));
 				PRINT_CODE(f_2(rx));
 				PRINT_EMPTY_LINE;
@@ -161,15 +162,15 @@ namespace EMCPP
 				PRINT_LINE("void f_1(T&& param)");
 				PRINT_EMPTY_LINE;
 
-				PRINT_CODE(int x = 27); 
+				PRINT_CODE(int x = 27);
 				PRINT_CODE(f_1(x));
 				PRINT_EMPTY_LINE;
 
-				PRINT_CODE(const int cx = x); 
+				PRINT_CODE(const int cx = x);
 				PRINT_CODE(f_1(cx));
 				PRINT_EMPTY_LINE;
 
-				PRINT_CODE(const int& rx = x); 
+				PRINT_CODE(const int& rx = x);
 				PRINT_CODE(f_1(rx));
 				PRINT_EMPTY_LINE;
 
@@ -239,22 +240,23 @@ namespace EMCPP
 				PRINT_TYPE_INDENT(1, param);
 			}
 
-			template<typename T, std::size_t N> 
-			constexpr std::size_t arraySize(T(&param)[N]) noexcept 
+			template<typename T, std::size_t N>
+			constexpr std::size_t arraySize(T(&param)[N]) noexcept
 			{ // constexpr
 #ifdef _MSC_VER
 #pragma message("Call " __FUNCTION__)
 #endif
-				PRINT_VALUE("Call "); PRINT_FUNCTION_NAME;
-				PRINT_TYPE_INDENT(1, param);
-				return N; 
+				PRINT_VALUE("Call ");
+				PRINT_VALUE(__FUNCTION__);
+				std::cout << "\t" << param << std::endl;
+				return N;
 			}
 
 #pragma warning(disable:4101)
 			void example()
 			{
 				PRINT_FUNCTION_NAME;
-				
+
 				PRINT_CODE(const char name[] = "A name");
 				PRINT_CODE(const char * ptrToName = name);
 				PRINT_EMPTY_LINE;
@@ -289,7 +291,7 @@ namespace EMCPP
 				PRINT_CODE(const auto sizeOfName = sizeof(name) / sizeof(char));
 				PRINT_CODE(const auto sizeOfMappedVals = sizeof(mappedVals) / sizeof(char));
 #ifdef _MSC_VER
-                //TODO: figure out why it doesn't work on mac.
+				//TODO: figure out why it doesn't work on mac.
 				static_assert(sizeOfName == sizeOfMappedVals, "size of two arrays are different.");
 #endif
 #pragma warning(default:4101)
@@ -428,7 +430,7 @@ namespace EMCPP
 				PRINT_TYPE_INDENT(1, param);
 				return TYPE_NAME(param);
 			}
-		
+
 			void example()
 			{
 				PRINT_FUNCTION_NAME;
@@ -441,7 +443,7 @@ namespace EMCPP
 
 				PRINT_CODE(auto x = 27);
 				PRINT_TYPE(x);
-				PRINT_CODE(std::string xType = Case1And3::func_for_x(27)); 
+				PRINT_CODE(std::string xType = Case1And3::func_for_x(27));
 				ASSERT(xType == TYPE_NAME(x), "Type doesn't match.");
 				PRINT_EMPTY_LINE;
 
@@ -452,7 +454,7 @@ namespace EMCPP
 
 				PRINT_CODE(auto& rx = x);
 				PRINT_TYPE(rx);
-				PRINT_CODE(std::string rxType = Case1And3::func_for_rx(x)); 
+				PRINT_CODE(std::string rxType = Case1And3::func_for_rx(x));
 				ASSERT(rxType == TYPE_NAME(rx), "Type doesn't match.");
 				PRINT_EMPTY_LINE;
 
@@ -462,9 +464,9 @@ namespace EMCPP
 				PRINT_LINE("void func_for_cx(const T param)");
 				PRINT_EMPTY_LINE;
 
-				PRINT_CODE(const auto cx = x);	
+				PRINT_CODE(const auto cx = x);
 				PRINT_TYPE(cx);
-				PRINT_CODE(std::string cxType = Case1And3::func_for_cx(x)); 
+				PRINT_CODE(std::string cxType = Case1And3::func_for_cx(x));
 				ASSERT(cxType == TYPE_NAME(cx), "Type doesn't match.");
 				PRINT_EMPTY_LINE;
 
@@ -476,7 +478,58 @@ namespace EMCPP
 			}
 		}
 
+		namespace Case2
+		{
+			template<class T>
+			std::string func_takes_rvalue(T&& param)
+			{
+				PRINT_CALL_FUNCTION_INDENT(1);
+				PRINT_CODE_INDENT(1, T a = param);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, param);
+				return TYPE_NAME(param);
+			}
 
+			void example()
+			{
+				PRINT_FUNCTION_NAME;
+				PRINT_EMPTY_LINE;
+
+				PRINT_LINE("Function Signature:");
+				PRINT_LINE("template<class T>");
+				PRINT_LINE("void func_takes_rvalue(T&& param)");
+				PRINT_EMPTY_LINE;
+
+				PRINT_CODE(int x = 27);
+				PRINT_CODE(auto&& uref1 = x); // x is int and lvalue, so uref1's type is int&
+				PRINT_TYPE(uref1);
+				PRINT_CODE(std::string uref1Type = Case2::func_takes_rvalue(x));
+				ASSERT(uref1Type == TYPE_NAME(uref1), "Type doesn't match.");
+				PRINT_EMPTY_LINE;
+
+				PRINT_CODE(const int cx = x);
+				PRINT_CODE(auto&& uref2 = cx); // cx is const int and lvalue so uref2's type is const int&
+				PRINT_TYPE(uref2);
+				PRINT_CODE(std::string uref2Type = Case2::func_takes_rvalue(cx));
+				ASSERT(uref2Type == TYPE_NAME(uref2), "Type doesn't match.");
+				PRINT_EMPTY_LINE;
+
+				PRINT_CODE(const int& crx = x);
+				PRINT_CODE(auto&& uref3 = crx);
+				PRINT_TYPE(uref3);
+				PRINT_CODE(std::string uref3Type = Case2::func_takes_rvalue(crx));
+				ASSERT(uref3Type == TYPE_NAME(uref3), "Type doesn't match.");
+				PRINT_EMPTY_LINE;
+
+				PRINT_CODE(auto&& uref4 = 27); // 27 is int and rvalue, so uref3's type is int&&
+				PRINT_TYPE(uref4);
+				PRINT_CODE(std::string uref4Type = Case2::func_takes_rvalue(27));
+				PRINT_STRING(uref4Type);
+
+				PRINT_CODE(auto&& uref5 = std::move(x));
+				PRINT_TYPE(uref5);
+			}
+		}
 
 		void autoTypeDeduction()
 		{
@@ -484,15 +537,129 @@ namespace EMCPP
 			PRINT_SEPERATOR_LINE;
 			Case1And3::example();
 			PRINT_SEPERATOR_LINE;
+			Case2::example();
+			PRINT_SEPERATOR_LINE;
 		}
+
 		RUN_FUNCTION_DECL(2)
 			autoTypeDeduction();
 		RUN_FUNCTION_END(2)
 	}
 
-    //tem 18: Use std::unique_ptr for exclusive-ownership resource management.
-    namespace item18
-    {
+	namespace item3 //Item 3: Understand decltype.
+	{
+		namespace cpp11
+		{
+			template<typename Container, typename Index>	// works, but
+			auto authAndAccess(Container& c, Index i) -> decltype(c[i])		// requires refinement
+			{
+				PRINT_TYPE_INDENT(1, c[i]);
+				PRINT_CODE_INDENT(1, return c[i]);
+			}
+
+			void example()
+			{
+				PRINT_FUNCTION_NAME;
+
+				PRINT_EMPTY_LINE;
+				PRINT_LINE("Function Signature:");
+				PRINT_LINE("template<typename Container, typename Index>");
+				PRINT_LINE("auto authAndAccess(Container& c, Index i) -> decltype(c[i])	");
+				PRINT_EMPTY_LINE;
+
+				PRINT_CODE(std::vector<bool> aVector{ true COMMA false COMMA true });
+				PRINT_CODE(bool aResult = authAndAccess(aVector COMMA 2));
+				PRINT_TYPE(aResult);
+			}
+		}
+
+		namespace cpp14
+		{
+
+			//Case2::example();
+			template<typename Container, typename Index>	// C++14;
+			auto authAndAccess1(Container& c, Index i)		// not quite
+			{												// correct
+				//during template type deduction, the reference-ness of an initializing expression is ignored
+
+				PRINT_CODE_INDENT(1, Container a = c);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, c);
+				PRINT_TYPE_INDENT(1, c[i]);
+				PRINT_CODE_INDENT(1, return c[i]); // return type deduced from c[i]
+			}
+
+			//this is the refinement of authAndAccess1
+			template<typename Container, typename Index> // C++14; works, but still requires
+			decltype(auto) authAndAccess_Refinement(Container& c, Index i) 
+			{ 
+				PRINT_CODE_INDENT(1, Container a = c);
+				PRINT_TYPE_INDENT(1, a);
+				PRINT_TYPE_INDENT(1, c);
+				PRINT_TYPE_INDENT(1, c[i]);
+				PRINT_CODE_INDENT(1, return c[i]); // return type deduced from c[i]
+			}
+
+			void example()
+			{
+				PRINT_FUNCTION_NAME;
+
+				{
+					PRINT_EMPTY_LINE;
+					PRINT_LINE("Function Signature:");
+					PRINT_LINE("template<typename Container, typename Index>");
+					PRINT_LINE("auto authAndAccess1(Container& c, Index i)");
+					PRINT_EMPTY_LINE;
+
+					PRINT_CODE(std::vector<bool> aVector{ true COMMA false COMMA true });
+					PRINT_CODE(auto aResult = authAndAccess1(aVector COMMA 2));
+					PRINT_TYPE(aResult);
+
+					/*************** NOTES ************** 
+					- Cannot compile due to the following error
+					- error C2106: '=': left operand must be l-value
+					*/ 
+					//PRINT_CODE(std::deque<int> myDeque(5, 1));
+					//PRINT_CODE(authAndAccess1(myDeque COMMA 5) = 10);
+					//PRINT_TYPE(aResult);
+					
+
+					PRINT_EMPTY_LINE;
+				}
+
+				{
+					PRINT_LINE("Function Signature:");
+					PRINT_LINE("template<typename Container, typename Index>");
+					PRINT_LINE("decltype(auto) authAndAccess_Refinement(Container& c, Index i)");
+					PRINT_EMPTY_LINE;
+
+					PRINT_CODE(std::vector<bool> aVector{ true COMMA false COMMA true });
+					PRINT_CODE(auto aResult = authAndAccess_Refinement(aVector COMMA 2));
+					PRINT_TYPE(aResult);
+					PRINT_EMPTY_LINE;
+				}
+			}
+
+		}
+
+		void decltypeTypeDeuction()
+		{
+			PRINT_FUNCTION_NAME;
+			PRINT_SEPERATOR_LINE;
+			cpp11::example();
+			PRINT_SEPERATOR_LINE;
+			cpp14::example();
+			PRINT_SEPERATOR_LINE;
+		}
+
+		RUN_FUNCTION_DECL(3)
+			decltypeTypeDeuction();
+		RUN_FUNCTION_END(3)
+	}
+
+	//tem 18: Use std::unique_ptr for exclusive-ownership resource management.
+	namespace item18
+	{
 		void initialiseUniquePtr()
 		{
 			PRINT_FUNCTION_NAME;
@@ -586,18 +753,18 @@ namespace EMCPP
 					std::unique_ptr<Foo> up7b(std::move(up7a)); // ownership transfer
 				}
 			}
-        }
+		}
 
 		RUN_FUNCTION_DECL(18)
-            initialiseUniquePtr();
+			initialiseUniquePtr();
 		RUN_FUNCTION_END(18)
-    } //namespace Item18
+	} //namespace Item18
 
-    //Item 19: Use std::shared_ptr for shared-ownership resource management.
-    namespace item19
-    {
+	//Item 19: Use std::shared_ptr for shared-ownership resource management.
+	namespace item19
+	{
 		RUN_FUNCTION_DECL(19);
 		RUN_FUNCTION_END(19);
-    }//namespace Item19
+	}//namespace Item19
 
 } //namespace EMCPP

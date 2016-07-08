@@ -8,7 +8,7 @@
 #define ITEM_END void run(); \
              }
 
-#define COMMA ,
+#define COMMA() ,
 
 namespace EMCPP
 {

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <memory>
 #include <map>
+#include <vector>
 #include <stdio.h>
 
 
@@ -567,8 +568,8 @@ namespace EMCPP
 				PRINT_LINE("auto authAndAccess(Container& c, Index i) -> decltype(c[i])	");
 				PRINT_EMPTY_LINE;
 
-				PRINT_CODE(std::vector<bool> aVector{ true COMMA false COMMA true });
-				PRINT_CODE(bool aResult = authAndAccess(aVector COMMA 2));
+				PRINT_CODE(std::vector<bool> aVector{ true , false , true });
+				PRINT_CODE(bool aResult = authAndAccess(aVector , 2));
 				PRINT_TYPE(aResult);
 			}
 		}
@@ -611,8 +612,8 @@ namespace EMCPP
 					PRINT_LINE("auto authAndAccess1(Container& c, Index i)");
 					PRINT_EMPTY_LINE;
 
-					PRINT_CODE(std::vector<bool> aVector{ true COMMA false COMMA true });
-					PRINT_CODE(auto aResult = authAndAccess1(aVector COMMA 2));
+					PRINT_CODE(std::vector<bool> aVector{ true , false , true });
+					PRINT_CODE(auto aResult = authAndAccess1(aVector, 2));
 					PRINT_TYPE(aResult);
 
 					/*************** NOTES ************** 
@@ -633,8 +634,8 @@ namespace EMCPP
 					PRINT_LINE("decltype(auto) authAndAccess_Refinement(Container& c, Index i)");
 					PRINT_EMPTY_LINE;
 
-					PRINT_CODE(std::vector<bool> aVector{ true COMMA false COMMA true });
-					PRINT_CODE(auto aResult = authAndAccess_Refinement(aVector COMMA 2));
+					PRINT_CODE(std::vector<bool> aVector{ true, false, true });
+					PRINT_CODE(auto aResult = authAndAccess_Refinement(aVector, 2));
 					PRINT_TYPE(aResult);
 					PRINT_EMPTY_LINE;
 				}

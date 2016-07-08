@@ -62,11 +62,11 @@
 #define PRINT_STRING(var)\
 		PRINT_STRING_INDENT(0, var);
 
-#define PRINT_CODE_INDENT(num, code) \
-		PRINT_INI(num) ; PRINT_VALUE("code - "); PRINT_LINE(#code << ";"); code 
+#define PRINT_CODE_INDENT(num, ...) \
+		PRINT_INI(num) ; PRINT_VALUE("code - "); PRINT_LINE(#__VA_ARGS__ << ";"); __VA_ARGS__ 
 
-#define PRINT_CODE(code) \
-		PRINT_CODE_INDENT(0, code)	
+#define PRINT_CODE(...) \
+		PRINT_CODE_INDENT(0, __VA_ARGS__)
 
 #define PRINT_FUNCTION_NAME \
 		PRINT_LINE("Function: " << std::string(__FUNCTION__).c_str())

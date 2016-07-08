@@ -15,8 +15,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "45"
             endingLineNumber = "45"
-            landmarkName = "register_run_function(unsigned long item_num, std::function&lt;void()&gt; item_run_func)"
-            landmarkType = "5">
+            landmarkName = "class ItemRunFunctions"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

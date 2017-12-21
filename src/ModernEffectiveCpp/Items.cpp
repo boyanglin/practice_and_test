@@ -26,7 +26,7 @@ static Utils::ItemRunRegister item_run_register(item_num, item_run);
 	PRINT_FUNCTION_NAME;
 
 #define RUN_FUNCTION_END(item_num)\
-	static_assert(ITEM_NUM == item_num, "The item number doesn't."); \
+	static_assert(ITEM_NUM == item_num, "The item number doesn't match."); \
 } \
 REGISTER_ITEM_FUN(item_num, run)
 

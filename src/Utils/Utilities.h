@@ -14,7 +14,7 @@
 #define TAB \
 		std::cout << "\t"
 
-#define PRINT_INI(num) for (long counter = num; counter > 0; --counter) TAB
+#define PRINT_INI(num) std::cout << "Line " << __LINE__ << ":  "; for (long counter = num; counter > 0; --counter) TAB
 
 #define PRINT_VALUE(val) \
 		std::cout << val

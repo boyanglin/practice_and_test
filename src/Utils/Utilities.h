@@ -16,6 +16,9 @@
 
 #define PRINT_INI(num) std::cout << "Line " << __LINE__ << ":  "; for (long counter = num; counter > 0; --counter) TAB
 
+#define PRINT(msg) \
+		std::cout << msg << std::endl
+
 #define PRINT_VALUE(val) \
 		std::cout << val
 
@@ -30,25 +33,26 @@
 		std::cout << std::endl;
 
 #define PRINT_LINE_INDENT(num, line) \
-		PRINT_INI(num); std::cout << line << std::endl
+		PRINT_INI(num); PRINT(line)
 
 #define PRINT_LINE(line) \
 		PRINT_LINE_INDENT(0, line)
 
+
 #define PRINT_MSG_INDENT(num, msg) \
-		PRINT_INI(num); PRINT_VALUE("msg - "); PRINT_LINE(msg);
+		PRINT_INI(num); PRINT_VALUE("msg - "); PRINT(msg);
 
 #define PRINT_MSG(msg) \
 		PRINT_MSG_INDENT(0, msg)
 
 #define PRINT_INFO_INDENT(num, info)\
-		PRINT_INI(num); PRINT_VALUE("info - "); PRINT_LINE(info);
+		PRINT_INI(num); PRINT_VALUE("info - "); PRINT(info);
 ;
 #define PRINT_INFO(info)\
 		PRINT_INFO_INDENT(0, info)
 
 #define PRINT_ERR(err) \
-		PRINT_INI(0); PRINT_VALUE("err - "); PRINT_LINE(err);
+		PRINT_INI(0); PRINT_VALUE("err - "); PRINT(err);
 
 #define PRINT_POD_INDENT(num, var) \
 		PRINT_INFO_INDENT(num, #var << " == " << var)
@@ -63,16 +67,16 @@
 		PRINT_STRING_INDENT(0, var);
 
 #define PRINT_CODE_INDENT(num, ...) \
-		PRINT_INI(num) ; PRINT_VALUE("code - "); PRINT_LINE(#__VA_ARGS__ << ";"); __VA_ARGS__ 
+		PRINT_INI(num) ; PRINT_VALUE("code - "); PRINT(#__VA_ARGS__ << ";"); __VA_ARGS__ 
 
 #define PRINT_CODE(...) \
 		PRINT_CODE_INDENT(0, __VA_ARGS__)
 
 #define PRINT_FUNCTION_NAME \
-		PRINT_LINE("Function: " << std::string(__FUNCTION__).c_str())
+		PRINT("Function: " << std::string(__FUNCTION__).c_str())
 
 #define PRINT_CALL_FUNCTION_INDENT(num) \
-		PRINT_INI(num); PRINT_VALUE("call - ");PRINT_FUNCTION_NAME
+		PRINT_INI(num); PRINT_VALUE("call - "); PRINT_FUNCTION_NAME
 
 #define PRINT_CALL_FUNCTION \
 		PRINT_CALL_FUNCTION_INDENT(0)
@@ -90,10 +94,20 @@
 		PRINT_LINE(std::setfill('=') << std::setw(50) << "" << std::setfill(' '))
 
 #define PRINT_EMPTY_LINE \
-		PRINT_LINE("")
-	
+		PRINT("")
+
 
 #define ASSERT(condition, message) if(!(condition)) throw std::runtime_error(message)
+
+#define PRINT_ASSERT(condition, error_message) \
+		PRINT("ASSERT: " #condition); \
+		ASSERT(condition, error_message)
+
+#define PRINT_ASSERT_EQUAL_INDENT(num, x1,x2, error_message) \
+		PRINT_INI(num); PRINT_ASSERT(x1 == x2, error_message); \
+
+#define PRINT_ASSERT_EQUAL(x1,x2, error_message) \
+		PRINT_ASSERT_EQUAL_INDENT(0, x1, x2, error_message)
 
 // copied from: http://stackoverflow.com/a/20170989
 template <class T>

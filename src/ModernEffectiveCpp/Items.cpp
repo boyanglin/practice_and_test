@@ -445,7 +445,7 @@ namespace EMCPP
 				PRINT_CODE(auto x = 27);
 				PRINT_TYPE(x);
 				PRINT_CODE(std::string xType = Case1And3::func_for_x(27));
-				ASSERT(xType == TYPE_NAME(x), "Type doesn't match.");
+				PRINT_ASSERT_EQUAL(xType, TYPE_NAME(x), "Type doesn't match.");
 				PRINT_EMPTY_LINE;
 
 				PRINT_LINE("Function Signature:");
@@ -456,9 +456,8 @@ namespace EMCPP
 				PRINT_CODE(auto& rx = x);
 				PRINT_TYPE(rx);
 				PRINT_CODE(std::string rxType = Case1And3::func_for_rx(x));
-				ASSERT(rxType == TYPE_NAME(rx), "Type doesn't match.");
+				PRINT_ASSERT_EQUAL(rxType, TYPE_NAME(rx), "Type doesn't match.");
 				PRINT_EMPTY_LINE;
-
 
 				PRINT_LINE("Function Signature:");
 				PRINT_LINE("template<typename T>");
@@ -468,13 +467,13 @@ namespace EMCPP
 				PRINT_CODE(const auto cx = x);
 				PRINT_TYPE(cx);
 				PRINT_CODE(std::string cxType = Case1And3::func_for_cx(x));
-				ASSERT(cxType == TYPE_NAME(cx), "Type doesn't match.");
+				PRINT_ASSERT_EQUAL(cxType, TYPE_NAME(cx), "Type doesn't match.");
 				PRINT_EMPTY_LINE;
 
 				PRINT_CODE(const auto& crx = x);
 				PRINT_TYPE(crx);
 				PRINT_CODE(std::string crxType = Case1And3::func_for_crx(x));
-				ASSERT(crxType == TYPE_NAME(crx), "Type doesn't match.");
+				PRINT_ASSERT_EQUAL(crxType, TYPE_NAME(crx), "Type doesn't match.");
 				PRINT_EMPTY_LINE;
 			}
 		}
@@ -516,7 +515,7 @@ namespace EMCPP
 				PRINT_EMPTY_LINE;
 
 				PRINT_CODE(const int& crx = x);
-				PRINT_CODE(auto&& uref3 = crx);
+				PRINT_CODE(auto&& uref3 = crx); // crx is const int& and lvalue so uref3's type is const int&
 				PRINT_TYPE(uref3);
 				PRINT_CODE(std::string uref3Type = Case2::func_takes_rvalue(crx));
 				ASSERT(uref3Type == TYPE_NAME(uref3), "Type doesn't match.");
@@ -532,6 +531,37 @@ namespace EMCPP
 			}
 		}
 
+		namespace CaseArray
+		{
+			void example()
+			{
+				PRINT_FUNCTION_NAME;
+				PRINT_EMPTY_LINE;
+
+				PRINT_CODE(const char charArray[] = "This is an array.");
+				PRINT_CODE(auto arr1 = charArray);
+				PRINT_TYPE(arr1);
+				PRINT_CODE(auto& arr2 = charArray);
+				PRINT_TYPE(arr2);
+			}
+		}
+
+		namespace CaseFunction
+		{
+			void a_dummy_function(double, int) {};
+
+			void example()
+			{
+				PRINT_FUNCTION_NAME;
+				PRINT_EMPTY_LINE;
+
+				PRINT_CODE(auto func1 = a_dummy_function);
+				PRINT_TYPE(func1);
+				PRINT_CODE(auto& func2 = a_dummy_function);
+				PRINT_TYPE(func2);
+			}
+		}
+
 		void autoTypeDeduction()
 		{
 			PRINT_FUNCTION_NAME;
@@ -539,6 +569,10 @@ namespace EMCPP
 			Case1And3::example();
 			PRINT_SEPERATOR_LINE;
 			Case2::example();
+			PRINT_SEPERATOR_LINE;
+			CaseArray::example();
+			PRINT_SEPERATOR_LINE;
+			CaseFunction::example();
 			PRINT_SEPERATOR_LINE;
 		}
 
